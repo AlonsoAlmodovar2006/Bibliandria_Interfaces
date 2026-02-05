@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ libro.titulo }} - Bibliandria{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Portada del libro -->
+        <div class="col-md-4 mb-4">
+            {% if libro.portada %}
+            <img src="{{ libro.portada.url }}" class="img-fluid rounded shadow" alt="{{ libro.titulo }}">
+            {% else %}
+            <div class="bg-secondary text-white rounded shadow d-flex align-items-center justify-content-center" style="height: 500px;">
+                <i class="bi bi-book display-1"></i>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Información del libro -->
+        <div class="col-md-8">
+            <h1 class="display-5 mb-3">{{ libro.titulo }}</h1>
+            <h4 class="text-muted mb-4">{{ libro.autor }}</h4>
+            
+            <div class="mb-4">
+                <span class="badge bg-primary me-2">{{ libro.get_formato_display }}</span>
+                <span class="badge bg-success">{{ libro.get_estado_display }}</span>
+            </div>
+            
+            <table class="table">
+                <tbody>
+                    {% if libro.isbn %}
+                    <tr>
+                        <th width="30%">ISBN</th>
+                        <td>{{ libro.isbn }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if libro.editorial %}
+                    <tr>
+                        <th>Editorial</th>
+                        <td>{{ libro.editorial }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if libro.año_publicacion %}
+                    <tr>
+                        <th>Año de Publicación</th>
+                        <td>{{ libro.año_publicacion }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if libro.numero_paginas %}
+                    <tr>
+                        <th>Páginas</th>
+                        <td>{{ libro.numero_paginas }}</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Propietario</th>
+                        <td>
+                            <a href="{% url 'ver_biblioteca' libro.propietario.username %}">
+                                {{ libro.propietario.get_full_name }}
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            {% if libro.descripcion %}
+            <div class="mb-4">
+                <h5>Descripción</h5>
+                <p class="text-muted">{{ libro.descripcion }}</p>
+            </div>
+            {% endif %}
+            
+            <!-- Reseña -->
+            {% if libro.resena %}
+            <div class="card mb-4 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-star-fill text-warning"></i> 
+                        Reseña Personal ({{ libro.resena.puntuacion }}/5)
+                    </h5>
+                    <p class="card-text">{{ libro.resena.comentario }}</p>
+                    {% if libro.resena.fecha_lectura %}
+                    <small class="text-muted">
+                        <i class="bi bi-calendar"></i> Leído el {{ libro.resena.fecha_lectura|date:"d/m/Y" }}
+                    </small>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Acciones (solo propietario) -->
+            {% if es_propietario %}
+            <div class="d-flex gap-2 flex-wrap mb-4">
+                <a href="{% url 'libro_editar' libro.pk %}" class="btn btn-warning">
+                    <i class="bi bi-pencil"></i> Editar
+                </a>
+                <a href="{% url 'resena_crear' libro.pk %}" class="btn btn-success">
+                    <i class="bi bi-star"></i> {% if libro.resena %}Editar{% else %}Añadir{% endif %} Reseña
+                </a>
+                <a href="{% url 'prestamo_crear' libro.pk %}" class="btn btn-info">
+                    <i class="bi bi-arrow-left-right"></i> Registrar Préstamo
+                </a>
+                <a href="{% url 'libro_eliminar' libro.pk %}" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Eliminar
+                </a>
+            </div>
+            
+            <!-- Préstamos -->
+            {% if libro.prestamos.all %}
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-arrow-left-right"></i> Historial de Préstamos</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Prestatario</th>
+                                    <th>Fecha Préstamo</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for prestamo in libro.prestamos.all %}
+                                <tr>
+                                    <td>{{ prestamo.nombre_prestatario }}</td>
+                                    <td>{{ prestamo.fecha_prestamo|date:"d/m/Y" }}</td>
+                                    <td>
+                                        {% if prestamo.esta_prestado %}
+                                        <span class="badge bg-warning">Prestado</span>
+                                        {% else %}
+                                        <span class="badge bg-success">Devuelto</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if prestamo.esta_prestado %}
+                                        <a href="{% url 'prestamo_devolver' prestamo.pk %}" class="btn btn-sm btn-success">
+                                            Marcar Devuelto
+                                        </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% else %}
+            <!-- Solicitud de contacto para visitantes -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-envelope"></i> Contactar con el Propietario</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ solicitud_form.as_p }}
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send"></i> Enviar Solicitud
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

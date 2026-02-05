@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Deseos - Bibliandria{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="display-5">
+                <i class="bi bi-heart"></i> Mi Lista de Deseos
+            </h1>
+            <p class="lead text-muted">Libros que deseas adquirir</p>
+        </div>
+    </div>
+    
+    <!-- Formulario para añadir -->
+    <div class="row mb-5">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-plus-circle"></i> Añadir Nuevo Libro</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.titulo.label_tag }}
+                                {{ form.titulo }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.autor.label_tag }}
+                                {{ form.autor }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.isbn.label_tag }}
+                                {{ form.isbn }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.prioridad.label_tag }}
+                                {{ form.prioridad }}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            {{ form.notas.label_tag }}
+                            {{ form.notas }}
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-plus"></i> Añadir
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Lista de items -->
+    {% if items %}
+    <div class="row">
+        <div class="col">
+            <h3 class="mb-3">Mis Libros Deseados ({{ items.count }})</h3>
+            <div class="list-group">
+                {% for item in items %}
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">{{ item.titulo }}</h5>
+                            <p class="mb-1 text-muted">{{ item.autor }}</p>
+                            {% if item.isbn %}
+                            <small class="text-muted">ISBN: {{ item.isbn }}</small>
+                            {% endif %}
+                            {% if item.notas %}
+                            <p class="mb-1 mt-2"><small>{{ item.notas }}</small></p>
+                            {% endif %}
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge {% if item.prioridad == 3 %}bg-danger{% elif item.prioridad == 2 %}bg-warning{% else %}bg-secondary{% endif %}">
+                                {{ item.get_prioridad_display }}
+                            </span>
+                            <a href="{% url 'lista_deseos_eliminar' item.pk %}" class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-inbox display-1 text-muted"></i>
+        <h4 class="mt-3">No tienes libros en tu lista de deseos</h4>
+        <p class="text-muted">Añade libros que te gustaría adquirir</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
