@@ -178,6 +178,21 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+### 🌐 Despliegue en Producción
+
+Para desplegar la aplicación en un servidor Ubuntu sin contenedores:
+
+- 📖 **Guía completa**: Ver [DEPLOY.md](DEPLOY.md)
+- 🚀 **Script automático**: Usar [deploy.sh](deploy.sh)
+- 📦 **Transferencia**: Ver [TRANSFER.md](TRANSFER.md)
+
+```bash
+# Ejemplo rápido
+scp deploy.sh usuario@servidor:~/
+ssh usuario@servidor
+chmod +x deploy.sh && ./deploy.sh
+```
+
 8. **Acceder a la aplicación**
 - Aplicación: http://localhost:8000
 - Panel de administración: http://localhost:8000/admin

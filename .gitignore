@@ -436,6 +436,12 @@ db.sqlite3-journal
 media/
 staticfiles/
 
+# Configuración de producción con SECRET_KEY
+bibliandria/settings_prod.py
+
+# Logs de producción
+logs/
+
 # Virtual Environment
 venv/
 env/

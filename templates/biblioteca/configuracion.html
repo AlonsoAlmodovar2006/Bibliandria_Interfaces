@@ -6,33 +6,34 @@
 <div class="container py-5">
     <div class="row">
         <div class="col-lg-8 mx-auto">
-            <h1 class="mb-4">
-                <i class="bi bi-gear"></i> Configuración de Cuenta
-            </h1>
+            <div class="page-header">
+                <h1><i class="bi bi-gear"></i> Configuración de Cuenta</h1>
+                <p class="lead">Gestiona tu perfil y preferencias</p>
+            </div>
             
             <!-- Información del usuario -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5 class="mb-0"><i class="bi bi-person"></i> Información Personal</h5>
+                    <h5 class="mb-0"><i class="bi bi-person" style="color: var(--accent);"></i> Información Personal</h5>
                 </div>
                 <div class="card-body">
-                    <table class="table table-borderless">
+                    <table class="table table-borderless book-meta-table mb-0">
                         <tr>
-                            <th width="30%">Usuario:</th>
-                            <td>@{{ user.username }}</td>
+                            <th width="30%"><i class="bi bi-at me-2"></i>Usuario</th>
+                            <td><strong>@{{ user.username }}</strong></td>
                         </tr>
                         <tr>
-                            <th>Nombre:</th>
+                            <th><i class="bi bi-person me-2"></i>Nombre</th>
                             <td>{{ user.get_full_name }}</td>
                         </tr>
                         <tr>
-                            <th>Email:</th>
+                            <th><i class="bi bi-envelope me-2"></i>Email</th>
                             <td>{{ user.email }}</td>
                         </tr>
                         <tr>
-                            <th>Rol:</th>
+                            <th><i class="bi bi-shield me-2"></i>Rol</th>
                             <td>
-                                <span class="badge {% if user.rol == 'admin' %}bg-danger{% elif user.rol == 'bibliotecario' %}bg-primary{% else %}bg-secondary{% endif %}">
+                                <span class="badge {% if user.rol == 'admin' %}bg-danger{% elif user.rol == 'bibliotecario' %}badge-accent{% else %}bg-secondary{% endif %}">
                                     {{ user.get_rol_display }}
                                 </span>
                             </td>
@@ -44,25 +45,29 @@
             <!-- Privacidad de la biblioteca -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5 class="mb-0"><i class="bi bi-shield-lock"></i> Privacidad de Biblioteca</h5>
+                    <h5 class="mb-0"><i class="bi bi-shield-lock" style="color: var(--accent);"></i> Privacidad de Biblioteca</h5>
                 </div>
                 <div class="card-body">
-                    <p class="mb-3">
-                        Tu biblioteca está actualmente 
-                        <strong>{% if user.biblioteca_publica %}pública{% else %}privada{% endif %}</strong>.
-                    </p>
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="me-2">Estado actual:</span>
+                        {% if user.biblioteca_publica %}
+                        <span class="badge bg-success" style="font-size: 0.9rem;"><i class="bi bi-eye me-1"></i> Pública</span>
+                        {% else %}
+                        <span class="badge bg-warning text-dark" style="font-size: 0.9rem;"><i class="bi bi-eye-slash me-1"></i> Privada</span>
+                        {% endif %}
+                    </div>
                     
                     <div class="alert alert-info">
                         {% if user.biblioteca_publica %}
-                        <i class="bi bi-eye"></i> Tu biblioteca es visible para todos los usuarios registrados.
+                        <i class="bi bi-info-circle-fill me-2"></i> Tu biblioteca es visible para todos los usuarios registrados. Pueden explorar tus libros y enviarte solicitudes de contacto.
                         {% else %}
-                        <i class="bi bi-eye-slash"></i> Tu biblioteca solo es visible para ti.
+                        <i class="bi bi-info-circle-fill me-2"></i> Tu biblioteca solo es visible para ti. Nadie más puede ver tus libros.
                         {% endif %}
                     </div>
                     
                     <form method="post">
                         {% csrf_token %}
-                        <button type="submit" name="cambiar_privacidad" class="btn btn-primary">
+                        <button type="submit" name="cambiar_privacidad" class="btn {% if user.biblioteca_publica %}btn-warning{% else %}btn-success{% endif %}">
                             <i class="bi bi-{% if user.biblioteca_publica %}eye-slash{% else %}eye{% endif %}"></i>
                             Hacer {% if user.biblioteca_publica %}Privada{% else %}Pública{% endif %}
                         </button>
@@ -73,26 +78,26 @@
             <!-- Estadísticas -->
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0"><i class="bi bi-graph-up"></i> Mis Estadísticas</h5>
+                    <h5 class="mb-0"><i class="bi bi-graph-up" style="color: var(--accent);"></i> Mis Estadísticas</h5>
                 </div>
                 <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-md-4 mb-3">
-                            <div class="p-3 border rounded">
-                                <h3 class="text-primary">{{ user.libros.count }}</h3>
-                                <p class="text-muted mb-0">Libros</p>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="stat-card stat-books">
+                                <div class="stat-number">{{ user.libros.count }}</div>
+                                <div class="stat-label">Libros</div>
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="p-3 border rounded">
-                                <h3 class="text-success">{{ user.lista_deseos.count }}</h3>
-                                <p class="text-muted mb-0">Lista de Deseos</p>
+                        <div class="col-md-4">
+                            <div class="stat-card stat-wishlist">
+                                <div class="stat-number">{{ user.lista_deseos.count }}</div>
+                                <div class="stat-label">Lista de Deseos</div>
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="p-3 border rounded">
-                                <h3 class="text-info">{{ user.solicitudes_recibidas.count }}</h3>
-                                <p class="text-muted mb-0">Solicitudes</p>
+                        <div class="col-md-4">
+                            <div class="stat-card stat-visibility">
+                                <div class="stat-number">{{ user.solicitudes_recibidas.count }}</div>
+                                <div class="stat-label">Solicitudes</div>
                             </div>
                         </div>
                     </div>

@@ -2,51 +2,22 @@
 
 {% block title %}Bienvenido - Bibliandria{% endblock %}
 
-{% block extra_css %}
-<style>
-    .hero-section {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 5rem 0;
-        margin-bottom: 3rem;
-    }
-    
-    .feature-card {
-        text-align: center;
-        padding: 2rem;
-        height: 100%;
-        border: none;
-        border-radius: 10px;
-        transition: all 0.3s;
-    }
-    
-    .feature-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    }
-    
-    .feature-icon {
-        font-size: 3rem;
-        color: #667eea;
-        margin-bottom: 1rem;
-    }
-</style>
-{% endblock %}
-
 {% block content %}
 <!-- Hero Section -->
 <div class="hero-section">
     <div class="container text-center">
-        <h1 class="display-3 fw-bold mb-4">
+        <h1 class="hero-title animate-fade-in" style="color: white;">
             <i class="bi bi-book-half"></i> Bibliandria
         </h1>
-        <p class="lead mb-4">Software de gestión digital de bibliotecas personales</p>
-        <p class="fs-5 mb-5">
-            Organiza tu colección de libros, lleva un registro de tus lecturas,<br>
+        <p class="hero-subtitle animate-fade-in animate-fade-in-delay-1">
+            Software de gestión digital de bibliotecas personales
+        </p>
+        <p class="hero-description animate-fade-in animate-fade-in-delay-2">
+            Organiza tu colección de libros, lleva un registro de tus lecturas,
             comparte tu biblioteca y descubre nuevas lecturas.
         </p>
         {% if not user.is_authenticated %}
-        <div class="d-flex gap-3 justify-content-center">
+        <div class="d-flex gap-3 justify-content-center flex-wrap animate-fade-in animate-fade-in-delay-3">
             <a href="{% url 'registro' %}" class="btn btn-light btn-lg px-5">
                 <i class="bi bi-person-plus"></i> Registrarse
             </a>
@@ -55,16 +26,59 @@
             </a>
         </div>
         {% else %}
-        <a href="{% url 'home' %}" class="btn btn-light btn-lg px-5">
+        <a href="{% url 'home' %}" class="btn btn-light btn-lg px-5 animate-fade-in animate-fade-in-delay-3">
             <i class="bi bi-arrow-right"></i> Ir a Mi Biblioteca
         </a>
         {% endif %}
     </div>
 </div>
 
+<!-- Roles Section -->
+<div class="container mb-5">
+    <h2 class="text-center mb-2 section-title section-title-center" style="color: var(--primary);">¿Quién puede usar Bibliandria?</h2>
+    <p class="text-center text-muted mb-5">Tres roles diseñados para cada tipo de usuario</p>
+    
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card feature-card animate-fade-in">
+                <div class="card-body">
+                    <i class="bi bi-shield-lock-fill feature-icon"></i>
+                    <h4 class="card-title">Administrador</h4>
+                    <p class="card-text">
+                        Gestiona todos los usuarios y sus bibliotecas. Mantiene la plataforma organizada y limpia.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card feature-card animate-fade-in animate-fade-in-delay-1">
+                <div class="card-body">
+                    <i class="bi bi-person-workspace feature-icon"></i>
+                    <h4 class="card-title">Bibliotecario</h4>
+                    <p class="card-text">
+                        Registra libros, escribe reseñas, gestiona préstamos y crea tu lista de deseos personal.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card feature-card animate-fade-in animate-fade-in-delay-2">
+                <div class="card-body">
+                    <i class="bi bi-eye-fill feature-icon"></i>
+                    <h4 class="card-title">Visitante</h4>
+                    <p class="card-text">
+                        Explora bibliotecas públicas y contacta con bibliotecarios para intercambiar o preguntar sobre libros.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Features Section -->
 <div class="container mb-5">
-    <h2 class="text-center mb-5 fw-bold">Funcionalidades</h2>
+    <h2 class="text-center mb-2 section-title section-title-center" style="color: var(--primary);">Funcionalidades</h2>
+    <p class="text-center text-muted mb-5">Todo lo que necesitas para gestionar tu biblioteca personal</p>
     
     <div class="row g-4">
         <div class="col-md-4">
@@ -73,7 +87,7 @@
                     <i class="bi bi-journal-plus feature-icon"></i>
                     <h4 class="card-title">Registra tus Libros</h4>
                     <p class="card-text">
-                        Añade libros a tu biblioteca personal con toda su información: título, autor, ISBN, estado y más.
+                        Añade libros con toda su información: título, autor, ISBN, editorial, portada, estado y formato.
                     </p>
                 </div>
             </div>
@@ -82,10 +96,10 @@
         <div class="col-md-4">
             <div class="card feature-card">
                 <div class="card-body">
-                    <i class="bi bi-star feature-icon"></i>
+                    <i class="bi bi-star-fill feature-icon"></i>
                     <h4 class="card-title">Reseñas Personales</h4>
                     <p class="card-text">
-                        Añade puntuaciones y comentarios personales para recordar qué te pareció cada lectura.
+                        Añade puntuaciones y comentarios para recordar qué te pareció cada lectura.
                     </p>
                 </div>
             </div>
@@ -97,7 +111,7 @@
                     <i class="bi bi-arrow-left-right feature-icon"></i>
                     <h4 class="card-title">Gestión de Préstamos</h4>
                     <p class="card-text">
-                        Registra cuándo prestas tus libros y a quién, para que nunca pierdas la pista de tu colección.
+                        Registra cuándo prestas tus libros y a quién, con fechas de devolución esperadas.
                     </p>
                 </div>
             </div>
@@ -106,10 +120,10 @@
         <div class="col-md-4">
             <div class="card feature-card">
                 <div class="card-body">
-                    <i class="bi bi-eye feature-icon"></i>
-                    <h4 class="card-title">Biblioteca Pública/Privada</h4>
+                    <i class="bi bi-lock feature-icon"></i>
+                    <h4 class="card-title">Privacidad Flexible</h4>
                     <p class="card-text">
-                        Decide si tu biblioteca es visible para otros usuarios o la mantienes privada.
+                        Decide si tu biblioteca es pública o privada. Tú controlas quién ve tus libros.
                     </p>
                 </div>
             </div>
@@ -118,10 +132,10 @@
         <div class="col-md-4">
             <div class="card feature-card">
                 <div class="card-body">
-                    <i class="bi bi-heart feature-icon"></i>
+                    <i class="bi bi-heart-fill feature-icon"></i>
                     <h4 class="card-title">Lista de Deseos</h4>
                     <p class="card-text">
-                        Crea una lista de libros que deseas adquirir para planificar tus futuras compras.
+                        Planifica futuras compras con prioridades y notas sobre dónde encontrar cada libro.
                     </p>
                 </div>
             </div>
@@ -130,10 +144,10 @@
         <div class="col-md-4">
             <div class="card feature-card">
                 <div class="card-body">
-                    <i class="bi bi-people feature-icon"></i>
-                    <h4 class="card-title">Explora Bibliotecas</h4>
+                    <i class="bi bi-envelope-paper feature-icon"></i>
+                    <h4 class="card-title">Contacto Directo</h4>
                     <p class="card-text">
-                        Visita las bibliotecas públicas de otros usuarios y descubre nuevas lecturas.
+                        Envía solicitudes a otros bibliotecarios para preguntar sobre libros o proponer intercambios.
                     </p>
                 </div>
             </div>
@@ -144,11 +158,12 @@
 <!-- CTA Section -->
 {% if not user.is_authenticated %}
 <div class="container my-5">
-    <div class="text-center p-5 bg-light rounded">
+    <div class="cta-section">
+        <i class="bi bi-book-half display-4" style="color: var(--accent); display: block; margin-bottom: 1rem;"></i>
         <h3 class="mb-3">¿Listo para organizar tu biblioteca?</h3>
-        <p class="mb-4">Únete a Bibliandria y comienza a gestionar tu colección de libros hoy mismo.</p>
-        <a href="{% url 'registro' %}" class="btn btn-primary btn-lg">
-            <i class="bi bi-rocket"></i> Comenzar Ahora
+        <p class="text-muted mb-4">Únete a Bibliandria y comienza a gestionar tu colección de libros hoy mismo.</p>
+        <a href="{% url 'registro' %}" class="btn btn-accent btn-lg">
+            <i class="bi bi-rocket-takeoff"></i> Comenzar Ahora
         </a>
     </div>
 </div>

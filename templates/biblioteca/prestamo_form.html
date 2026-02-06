@@ -6,20 +6,37 @@
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1 class="mb-4">Registrar Préstamo</h1>
-            <p class="lead text-muted">{{ libro.titulo }} - {{ libro.autor }}</p>
+            <div class="page-header">
+                <h1><i class="bi bi-arrow-left-right"></i> Registrar Préstamo</h1>
+                <p class="lead"><i class="bi bi-book me-1"></i> {{ libro.titulo }} — {{ libro.autor }}</p>
+            </div>
             
             <div class="card">
-                <div class="card-body">
+                <div class="card-body p-4">
                     <form method="post">
                         {% csrf_token %}
-                        {{ form.as_p }}
                         
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% if field.errors %}
+                            <div class="text-danger small mt-1">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        
+                        <hr class="my-4">
                         <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-info">
+                            <button type="submit" class="btn btn-accent">
                                 <i class="bi bi-arrow-left-right"></i> Registrar Préstamo
                             </button>
-                            <a href="{% url 'libro_detalle' libro.pk %}" class="btn btn-secondary">
+                            <a href="{% url 'libro_detalle' libro.pk %}" class="btn btn-outline-secondary">
                                 <i class="bi bi-x-circle"></i> Cancelar
                             </a>
                         </div>

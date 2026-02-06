@@ -6,23 +6,24 @@
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card border-danger">
+            <div class="card confirm-card">
                 <div class="card-header bg-danger text-white">
-                    <h4 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Confirmar Eliminación</h4>
+                    <h4 class="mb-0"><i class="bi bi-exclamation-triangle-fill"></i> Confirmar Eliminación</h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-4">
                     <p class="lead">¿Estás seguro de que deseas eliminar este libro?</p>
                     <div class="alert alert-warning">
+                        <i class="bi bi-book me-2"></i>
                         <strong>{{ libro.titulo }}</strong> de {{ libro.autor }}
                     </div>
-                    <p class="text-danger">Esta acción no se puede deshacer.</p>
+                    <p class="text-danger small"><i class="bi bi-exclamation-circle me-1"></i> Esta acción no se puede deshacer. Se eliminarán también las reseñas y préstamos asociados.</p>
                     
-                    <form method="post" class="d-flex gap-2">
+                    <form method="post" class="d-flex gap-2 mt-4">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger">
                             <i class="bi bi-trash"></i> Sí, Eliminar
                         </button>
-                        <a href="{% url 'libro_detalle' libro.pk %}" class="btn btn-secondary">
+                        <a href="{% url 'libro_detalle' libro.pk %}" class="btn btn-outline-secondary">
                             <i class="bi bi-x-circle"></i> Cancelar
                         </a>
                     </form>

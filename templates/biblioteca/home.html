@@ -4,116 +4,112 @@
 
 {% block content %}
 <div class="container py-5">
-    <div class="row mb-4">
-        <div class="col">
-            <h1 class="display-5">
-                <i class="bi bi-house"></i> Mi Dashboard
-            </h1>
-            <p class="lead text-muted">Bienvenido, {{ user.first_name }}</p>
-        </div>
+    <!-- Saludo -->
+    <div class="page-header">
+        <h1 class="display-5">
+            <i class="bi bi-house-door"></i> Mi Dashboard
+        </h1>
+        <p class="lead">Bienvenido de nuevo, <strong>{{ user.first_name|default:user.username }}</strong></p>
     </div>
     
     <!-- Estadísticas -->
     <div class="row g-4 mb-5">
-        <div class="col-md-4">
-            <div class="card bg-primary text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h3 class="mb-0">{{ total_libros }}</h3>
-                            <p class="mb-0">Libros en tu Biblioteca</p>
-                        </div>
-                        <i class="bi bi-book display-4 opacity-50"></i>
+        <div class="col-md-4 animate-fade-in">
+            <div class="stat-card stat-books">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="stat-number">{{ total_libros }}</div>
+                        <div class="stat-label">Libros en tu Biblioteca</div>
                     </div>
+                    <i class="bi bi-book stat-icon"></i>
                 </div>
             </div>
         </div>
         
-        <div class="col-md-4">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h3 class="mb-0">{{ lista_deseos_count }}</h3>
-                            <p class="mb-0">Libros en Lista de Deseos</p>
-                        </div>
-                        <i class="bi bi-heart display-4 opacity-50"></i>
+        <div class="col-md-4 animate-fade-in animate-fade-in-delay-1">
+            <div class="stat-card stat-wishlist">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="stat-number">{{ lista_deseos_count }}</div>
+                        <div class="stat-label">Lista de Deseos</div>
                     </div>
+                    <i class="bi bi-heart stat-icon"></i>
                 </div>
             </div>
         </div>
         
-        <div class="col-md-4">
-            <div class="card bg-info text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h3 class="mb-0">{% if user.biblioteca_publica %}Pública{% else %}Privada{% endif %}</h3>
-                            <p class="mb-0">Visibilidad de Biblioteca</p>
-                        </div>
-                        <i class="bi bi-{% if user.biblioteca_publica %}eye{% else %}eye-slash{% endif %} display-4 opacity-50"></i>
+        <div class="col-md-4 animate-fade-in animate-fade-in-delay-2">
+            <div class="stat-card stat-visibility">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="stat-number">{% if user.biblioteca_publica %}Pública{% else %}Privada{% endif %}</div>
+                        <div class="stat-label">Visibilidad de Biblioteca</div>
                     </div>
+                    <i class="bi bi-{% if user.biblioteca_publica %}eye{% else %}eye-slash{% endif %} stat-icon"></i>
                 </div>
             </div>
         </div>
     </div>
     
     <!-- Acciones Rápidas -->
-    <div class="row mb-5">
-        <div class="col">
-            <h3 class="mb-3">Acciones Rápidas</h3>
-            <div class="d-flex gap-2 flex-wrap">
-                <a href="{% url 'libro_crear' %}" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> Añadir Libro
-                </a>
-                <a href="{% url 'mi_biblioteca' %}" class="btn btn-outline-primary">
-                    <i class="bi bi-bookshelf"></i> Ver Mi Biblioteca
-                </a>
-                <a href="{% url 'bibliotecas_publicas' %}" class="btn btn-outline-secondary">
-                    <i class="bi bi-people"></i> Explorar Bibliotecas
-                </a>
-                <a href="{% url 'lista_deseos' %}" class="btn btn-outline-success">
-                    <i class="bi bi-heart"></i> Lista de Deseos
-                </a>
-            </div>
+    <div class="mb-5">
+        <h3 class="section-title"><i class="bi bi-lightning-charge" style="color: var(--accent);"></i> Acciones Rápidas</h3>
+        <div class="d-flex gap-3 flex-wrap">
+            <a href="{% url 'libro_crear' %}" class="quick-action-btn action-primary">
+                <i class="bi bi-plus-circle"></i> Añadir Libro
+            </a>
+            <a href="{% url 'mi_biblioteca' %}" class="quick-action-btn action-outline">
+                <i class="bi bi-bookshelf"></i> Ver Mi Biblioteca
+            </a>
+            <a href="{% url 'bibliotecas_publicas' %}" class="quick-action-btn action-outline">
+                <i class="bi bi-people"></i> Explorar Bibliotecas
+            </a>
+            <a href="{% url 'lista_deseos' %}" class="quick-action-btn action-outline">
+                <i class="bi bi-heart"></i> Lista de Deseos
+            </a>
+            <a href="{% url 'configuracion' %}" class="quick-action-btn action-outline">
+                <i class="bi bi-gear"></i> Configuración
+            </a>
         </div>
     </div>
     
     <!-- Libros Recientes -->
     {% if libros_recientes %}
-    <div class="row">
-        <div class="col">
-            <h3 class="mb-3">Libros Añadidos Recientemente</h3>
-            <div class="row g-3">
-                {% for libro in libros_recientes %}
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="card book-card">
-                        {% if libro.portada %}
-                        <img src="{{ libro.portada.url }}" class="card-img-top book-cover" alt="{{ libro.titulo }}">
-                        {% else %}
-                        <div class="book-cover d-flex align-items-center justify-content-center bg-secondary text-white">
-                            <i class="bi bi-book display-3"></i>
-                        </div>
-                        {% endif %}
-                        <div class="card-body">
-                            <h6 class="card-title text-truncate" title="{{ libro.titulo }}">{{ libro.titulo }}</h6>
-                            <p class="card-text text-muted small text-truncate">{{ libro.autor }}</p>
+    <div>
+        <h3 class="section-title"><i class="bi bi-clock-history" style="color: var(--accent);"></i> Libros Añadidos Recientemente</h3>
+        <div class="row g-4">
+            {% for libro in libros_recientes %}
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2-4 animate-fade-in">
+                <div class="card book-card">
+                    {% if libro.portada %}
+                    <img src="{{ libro.portada.url }}" class="card-img-top book-cover" alt="{{ libro.titulo }}">
+                    {% else %}
+                    <div class="book-cover d-flex align-items-center justify-content-center text-white" 
+                         style="background: linear-gradient(135deg, var(--primary-light), var(--primary));">
+                        <i class="bi bi-book display-3" style="color: var(--accent); opacity: 0.7;"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title" title="{{ libro.titulo }}">{{ libro.titulo }}</h6>
+                        <p class="card-text small mb-2">{{ libro.autor }}</p>
+                        <div class="mt-auto">
+                            <span class="badge badge-accent mb-2">{{ libro.get_formato_display }}</span>
                             <a href="{% url 'libro_detalle' libro.pk %}" class="btn btn-sm btn-outline-primary w-100">
                                 Ver Detalles
                             </a>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
     </div>
     {% else %}
-    <div class="text-center py-5">
-        <i class="bi bi-inbox display-1 text-muted"></i>
-        <h4 class="mt-3">Aún no tienes libros</h4>
-        <p class="text-muted">Comienza añadiendo tu primer libro a tu biblioteca</p>
-        <a href="{% url 'libro_crear' %}" class="btn btn-primary">
+    <div class="empty-state">
+        <i class="bi bi-book display-1"></i>
+        <h4>Aún no tienes libros</h4>
+        <p>Comienza añadiendo tu primer libro a tu biblioteca personal</p>
+        <a href="{% url 'libro_crear' %}" class="btn btn-accent btn-lg">
             <i class="bi bi-plus-circle"></i> Añadir Mi Primer Libro
         </a>
     </div>

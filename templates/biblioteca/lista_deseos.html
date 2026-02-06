@@ -4,13 +4,9 @@
 
 {% block content %}
 <div class="container py-5">
-    <div class="row mb-4">
-        <div class="col">
-            <h1 class="display-5">
-                <i class="bi bi-heart"></i> Mi Lista de Deseos
-            </h1>
-            <p class="lead text-muted">Libros que deseas adquirir</p>
-        </div>
+    <div class="page-header">
+        <h1><i class="bi bi-heart"></i> Mi Lista de Deseos</h1>
+        <p class="lead">Planifica tus futuras compras y regalos</p>
     </div>
     
     <!-- Formulario para añadir -->
@@ -18,37 +14,37 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0"><i class="bi bi-plus-circle"></i> Añadir Nuevo Libro</h5>
+                    <h5 class="mb-0"><i class="bi bi-plus-circle" style="color: var(--accent);"></i> Añadir Nuevo Libro Deseado</h5>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-4">
                     <form method="post">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                {{ form.titulo.label_tag }}
+                                <label class="form-label"><i class="bi bi-book me-1"></i> Título</label>
                                 {{ form.titulo }}
                             </div>
                             <div class="col-md-6 mb-3">
-                                {{ form.autor.label_tag }}
+                                <label class="form-label"><i class="bi bi-person me-1"></i> Autor</label>
                                 {{ form.autor }}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                {{ form.isbn.label_tag }}
+                                <label class="form-label"><i class="bi bi-upc me-1"></i> ISBN</label>
                                 {{ form.isbn }}
                             </div>
                             <div class="col-md-6 mb-3">
-                                {{ form.prioridad.label_tag }}
+                                <label class="form-label"><i class="bi bi-flag me-1"></i> Prioridad</label>
                                 {{ form.prioridad }}
                             </div>
                         </div>
                         <div class="mb-3">
-                            {{ form.notas.label_tag }}
+                            <label class="form-label"><i class="bi bi-chat-text me-1"></i> Notas</label>
                             {{ form.notas }}
                         </div>
-                        <button type="submit" class="btn btn-success">
-                            <i class="bi bi-plus"></i> Añadir
+                        <button type="submit" class="btn btn-accent">
+                            <i class="bi bi-plus-lg"></i> Añadir a la Lista
                         </button>
                     </form>
                 </div>
@@ -58,28 +54,28 @@
     
     <!-- Lista de items -->
     {% if items %}
-    <div class="row">
-        <div class="col">
-            <h3 class="mb-3">Mis Libros Deseados ({{ items.count }})</h3>
-            <div class="list-group">
+    <div>
+        <h3 class="section-title"><i class="bi bi-list-heart" style="color: var(--accent);"></i> Mis Libros Deseados ({{ items.count }})</h3>
+        <div class="card">
+            <div class="list-group list-group-flush">
                 {% for item in items %}
                 <div class="list-group-item">
                     <div class="d-flex w-100 justify-content-between align-items-start">
                         <div class="flex-grow-1">
-                            <h5 class="mb-1">{{ item.titulo }}</h5>
-                            <p class="mb-1 text-muted">{{ item.autor }}</p>
+                            <h5 class="mb-1" style="font-family: 'Playfair Display', serif;">{{ item.titulo }}</h5>
+                            <p class="mb-1" style="color: var(--text-muted);"><i class="bi bi-person me-1"></i> {{ item.autor }}</p>
                             {% if item.isbn %}
-                            <small class="text-muted">ISBN: {{ item.isbn }}</small>
+                            <small class="text-muted"><i class="bi bi-upc me-1"></i> ISBN: {{ item.isbn }}</small>
                             {% endif %}
                             {% if item.notas %}
-                            <p class="mb-1 mt-2"><small>{{ item.notas }}</small></p>
+                            <p class="mb-0 mt-2" style="font-size: 0.9rem; color: var(--text-muted);"><i class="bi bi-chat-left-text me-1"></i> {{ item.notas }}</p>
                             {% endif %}
                         </div>
                         <div class="d-flex align-items-center gap-2">
-                            <span class="badge {% if item.prioridad == 3 %}bg-danger{% elif item.prioridad == 2 %}bg-warning{% else %}bg-secondary{% endif %}">
-                                {{ item.get_prioridad_display }}
+                            <span class="badge {% if item.prioridad == 3 %}badge-priority-alta{% elif item.prioridad == 2 %}badge-priority-media{% else %}badge-priority-baja{% endif %}">
+                                <i class="bi bi-flag-fill me-1"></i>{{ item.get_prioridad_display }}
                             </span>
-                            <a href="{% url 'lista_deseos_eliminar' item.pk %}" class="btn btn-sm btn-outline-danger">
+                            <a href="{% url 'lista_deseos_eliminar' item.pk %}" class="btn btn-sm btn-outline-danger" title="Eliminar">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </div>
@@ -90,10 +86,10 @@
         </div>
     </div>
     {% else %}
-    <div class="text-center py-5">
-        <i class="bi bi-inbox display-1 text-muted"></i>
-        <h4 class="mt-3">No tienes libros en tu lista de deseos</h4>
-        <p class="text-muted">Añade libros que te gustaría adquirir</p>
+    <div class="empty-state">
+        <i class="bi bi-heart display-1"></i>
+        <h4>Tu lista de deseos está vacía</h4>
+        <p>Añade libros que te gustaría adquirir usando el formulario de arriba</p>
     </div>
     {% endif %}
 </div>

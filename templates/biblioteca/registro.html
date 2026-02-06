@@ -5,74 +5,88 @@
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <div class="card shadow">
-                <div class="card-body p-5">
-                    <h2 class="text-center mb-4">
-                        <i class="bi bi-person-plus"></i> Crear Cuenta
-                    </h2>
-                    
+        <div class="col-md-7 col-lg-5">
+            <div class="text-center mb-4">
+                <i class="bi bi-book-half display-3" style="color: var(--accent);"></i>
+                <h2 class="mt-2">Únete a Bibliandria</h2>
+                <p class="text-muted">Crea tu cuenta y empieza a gestionar tu biblioteca</p>
+            </div>
+            
+            <div class="card auth-card">
+                <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="{{ form.first_name.id_for_label }}" class="form-label">Nombre</label>
+                                <label for="{{ form.first_name.id_for_label }}" class="form-label">
+                                    <i class="bi bi-person me-1"></i> Nombre
+                                </label>
                                 {{ form.first_name }}
                                 {% if form.first_name.errors %}
-                                    <div class="text-danger">{{ form.first_name.errors }}</div>
+                                    <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
                                 {% endif %}
                             </div>
                             
                             <div class="col-md-6 mb-3">
-                                <label for="{{ form.last_name.id_for_label }}" class="form-label">Apellidos</label>
+                                <label for="{{ form.last_name.id_for_label }}" class="form-label">
+                                    Apellidos
+                                </label>
                                 {{ form.last_name }}
                                 {% if form.last_name.errors %}
-                                    <div class="text-danger">{{ form.last_name.errors }}</div>
+                                    <div class="text-danger small mt-1">{{ form.last_name.errors }}</div>
                                 {% endif %}
                             </div>
                         </div>
                         
                         <div class="mb-3">
-                            <label for="{{ form.username.id_for_label }}" class="form-label">Usuario</label>
+                            <label for="{{ form.username.id_for_label }}" class="form-label">
+                                <i class="bi bi-at me-1"></i> Usuario
+                            </label>
                             {{ form.username }}
                             {% if form.username.errors %}
-                                <div class="text-danger">{{ form.username.errors }}</div>
+                                <div class="text-danger small mt-1">{{ form.username.errors }}</div>
                             {% endif %}
                         </div>
                         
                         <div class="mb-3">
-                            <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                            <label for="{{ form.email.id_for_label }}" class="form-label">
+                                <i class="bi bi-envelope me-1"></i> Email
+                            </label>
                             {{ form.email }}
                             {% if form.email.errors %}
-                                <div class="text-danger">{{ form.email.errors }}</div>
+                                <div class="text-danger small mt-1">{{ form.email.errors }}</div>
                             {% endif %}
                         </div>
                         
                         <div class="mb-3">
-                            <label for="{{ form.password1.id_for_label }}" class="form-label">Contraseña</label>
+                            <label for="{{ form.password1.id_for_label }}" class="form-label">
+                                <i class="bi bi-lock me-1"></i> Contraseña
+                            </label>
                             {{ form.password1 }}
                             {% if form.password1.errors %}
-                                <div class="text-danger">{{ form.password1.errors }}</div>
+                                <div class="text-danger small mt-1">{{ form.password1.errors }}</div>
                             {% endif %}
                         </div>
                         
-                        <div class="mb-3">
-                            <label for="{{ form.password2.id_for_label }}" class="form-label">Confirmar Contraseña</label>
+                        <div class="mb-4">
+                            <label for="{{ form.password2.id_for_label }}" class="form-label">
+                                <i class="bi bi-lock-fill me-1"></i> Confirmar Contraseña
+                            </label>
                             {{ form.password2 }}
                             {% if form.password2.errors %}
-                                <div class="text-danger">{{ form.password2.errors }}</div>
+                                <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
                             {% endif %}
                         </div>
                         
-                        <button type="submit" class="btn btn-primary w-100 mb-3">
-                            <i class="bi bi-person-plus"></i> Registrarse
+                        <button type="submit" class="btn btn-accent w-100 mb-3 py-2">
+                            <i class="bi bi-person-plus"></i> Crear Cuenta
                         </button>
                     </form>
                     
-                    <div class="text-center">
-                        <p class="mb-0">¿Ya tienes cuenta? 
-                            <a href="{% url 'login' %}">Inicia sesión aquí</a>
+                    <div class="text-center mt-3">
+                        <p class="mb-0 text-muted">¿Ya tienes cuenta? 
+                            <a href="{% url 'login' %}" style="color: var(--accent-dark); font-weight: 600;">Inicia sesión aquí</a>
                         </p>
                     </div>
                 </div>
