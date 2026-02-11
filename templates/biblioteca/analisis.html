@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Análisis - Bibliandria{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="page-header">
+                <h1><i class="bi bi-camera-video"></i> Análisis de Usabilidad</h1>
+                <p class="lead">Vídeos de estudio de accesibilidad, usabilidad y responsividad de la aplicación</p>
+            </div>
+            
+            <!-- Descripción del estudio -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-info-circle" style="color: var(--accent);"></i> Sobre este Estudio</h5>
+                </div>
+                <div class="card-body">
+                    <p>Esta sección contiene los vídeos de análisis realizados como parte del estudio de <strong>responsividad, usabilidad y accesibilidad</strong> de la aplicación Bibliandria.</p>
+                    <p class="mb-0">El objetivo es documentar y evaluar cómo la aplicación se comporta en diferentes dispositivos, contextos de uso y para usuarios con diferentes necesidades de accesibilidad.</p>
+                </div>
+            </div>
+            
+            <!-- Sección de vídeos -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-play-circle" style="color: var(--accent);"></i> Vídeos de Estudio</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle-fill me-2"></i> 
+                        Los vídeos de análisis se irán añadiendo a medida que se realicen las pruebas correspondientes.
+                    </div>
+                    
+                    <!-- Contenedor de vídeos - Añadir aquí los vídeos -->
+                    <div id="videos-container">
+                        <div class="text-center py-5 text-muted">
+                            <i class="bi bi-camera-video" style="font-size: 4rem; opacity: 0.3;"></i>
+                            <p class="mt-3">No hay vídeos disponibles todavía.</p>
+                            <p class="small">Los vídeos de análisis aparecerán aquí cuando se añadan.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Ejemplo de cómo añadir un vídeo (comentado):
+                    <div class="video-item mb-4">
+                        <h6 class="mb-2"><i class="bi bi-play-btn me-2"></i>Título del Vídeo</h6>
+                        <div class="ratio ratio-16x9">
+                            <iframe src="URL_DEL_VIDEO" title="Título" allowfullscreen></iframe>
+                        </div>
+                        <p class="mt-2 text-muted small">Descripción del vídeo...</p>
+                    </div>
+                    -->
+                </div>
+            </div>
+            
+            <!-- Categorías de análisis -->
+            <div class="row g-4">
+                <div class="col-sm-6 col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-phone feature-icon"></i>
+                            <h5 class="card-title">Responsividad</h5>
+                            <p class="card-text text-muted">Análisis del comportamiento en diferentes tamaños de pantalla y dispositivos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-hand-index-thumb feature-icon"></i>
+                            <h5 class="card-title">Usabilidad</h5>
+                            <p class="card-text text-muted">Evaluación de la experiencia de usuario y facilidad de uso.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-universal-access feature-icon"></i>
+                            <h5 class="card-title">Accesibilidad</h5>
+                            <p class="card-text text-muted">Verificación de estándares WCAG y uso con tecnologías asistivas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

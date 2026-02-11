@@ -5,10 +5,11 @@
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-5 col-lg-4">
+        <div class="col-md-6 col-lg-5">
             <div class="text-center mb-4">
                 <i class="bi bi-book-half display-3" style="color: var(--accent);"></i>
                 <h2 class="mt-2">Bibliandria</h2>
+                <p class="text-muted">Estudio de Usabilidad y Accesibilidad</p>
             </div>
             
             <div class="card auth-card">
@@ -17,8 +18,35 @@
                         <i class="bi bi-box-arrow-in-right" style="color: var(--accent);"></i> Iniciar Sesión
                     </h3>
                     
+                    <!-- Selector de versión -->
+                    <div class="mb-4">
+                        <label class="form-label text-center w-100 fw-bold mb-3">
+                            <i class="bi bi-palette me-1"></i> Selecciona la versión de la aplicación:
+                        </label>
+                        <div class="version-selector">
+                            <div class="version-option version-normal selected" data-version="normal" onclick="selectVersion('normal')">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span class="version-name">Normal</span>
+                                <span class="version-desc">Versión correcta</span>
+                            </div>
+                            <div class="version-option version-no-usable" data-version="no-usable" onclick="selectVersion('no-usable')">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                <span class="version-name">No Usable</span>
+                                <span class="version-desc">Problemas de UX</span>
+                            </div>
+                            <div class="version-option version-no-accesible" data-version="no-accesible" onclick="selectVersion('no-accesible')">
+                                <i class="bi bi-universal-access"></i>
+                                <span class="version-name">No Accesible</span>
+                                <span class="version-desc">Problemas de A11y</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
                     <form method="post">
                         {% csrf_token %}
+                        <input type="hidden" name="version" id="selected-version" value="normal">
                         
                         <div class="mb-3">
                             <label for="username" class="form-label">
@@ -51,4 +79,35 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function selectVersion(version) {
+        console.log('Versión seleccionada:', version);
+        
+        // Actualizar el campo oculto
+        document.getElementById('selected-version').value = version;
+        
+        // Actualizar clases visuales
+        document.querySelectorAll('.version-option').forEach(function(opt) {
+            opt.classList.remove('selected');
+        });
+        
+        var selectedOption = document.querySelector('.version-option[data-version="' + version + '"]');
+        if (selectedOption) {
+            selectedOption.classList.add('selected');
+        }
+    }
+    
+    // Asegurar que los elementos son clickeables al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.version-option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var version = this.getAttribute('data-version');
+                selectVersion(version);
+            });
+        });
+    });
+</script>
 {% endblock %}

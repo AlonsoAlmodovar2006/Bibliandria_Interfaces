@@ -28,6 +28,8 @@ def registro(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            # Establecer la versión normal por defecto
+            request.session['version'] = 'normal'
             messages.success(request, '¡Registro exitoso! Bienvenido a Bibliandria.')
             return redirect('home')
     else:
@@ -44,10 +46,13 @@ def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+        version = request.POST.get('version', 'normal')
         user = authenticate(request, username=username, password=password)
         
         if user is not None:
             login(request, user)
+            # Guardar la versión seleccionada en la sesión
+            request.session['version'] = version
             messages.success(request, f'¡Bienvenido de nuevo, {user.first_name}!')
             return redirect('home')
         else:
@@ -387,3 +392,22 @@ def configuracion(request):
             messages.success(request, f'Tu biblioteca ahora es {estado}.')
     
     return render(request, 'biblioteca/configuracion.html')
+
+
+# ====== VISTAS ADMINISTRATIVAS (Solo Admin) ======
+
+@login_required
+def analisis(request):
+    """Página de análisis con vídeos de estudio de usabilidad"""
+    if not request.user.es_admin():
+        return HttpResponseForbidden('No tienes permisos para acceder a esta página.')
+    return render(request, 'biblioteca/analisis.html')
+
+
+@login_required
+def sobre_nosotros(request):
+    """Página sobre el desarrollador y el proyecto"""
+    if not request.user.es_admin():
+        return HttpResponseForbidden('No tienes permisos para acceder a esta página.')
+    return render(request, 'biblioteca/sobre_nosotros.html')
+

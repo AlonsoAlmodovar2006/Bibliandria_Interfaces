@@ -17,6 +17,7 @@
                     <h5 class="mb-0"><i class="bi bi-person" style="color: var(--accent);"></i> Información Personal</h5>
                 </div>
                 <div class="card-body">
+                    <div class="table-responsive">
                     <table class="table table-borderless book-meta-table mb-0">
                         <tr>
                             <th width="30%"><i class="bi bi-at me-2"></i>Usuario</th>
@@ -39,6 +40,7 @@
                             </td>
                         </tr>
                     </table>
+                    </div>
                 </div>
             </div>
             
@@ -72,6 +74,31 @@
                             Hacer {% if user.biblioteca_publica %}Privada{% else %}Pública{% endif %}
                         </button>
                     </form>
+                </div>
+            </div>
+            
+            <!-- Versión de la aplicación (para estudio) -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-palette" style="color: var(--accent);"></i> Versión de la Aplicación</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Versión actual para el estudio de usabilidad/accesibilidad:</p>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="me-2">Versión activa:</span>
+                        {% if request.session.version == 'no-usable' %}
+                        <span class="badge bg-warning text-dark" style="font-size: 0.9rem;"><i class="bi bi-exclamation-triangle me-1"></i> No Usable</span>
+                        {% elif request.session.version == 'no-accesible' %}
+                        <span class="badge bg-danger" style="font-size: 0.9rem;"><i class="bi bi-universal-access me-1"></i> No Accesible</span>
+                        {% else %}
+                        <span class="badge bg-success" style="font-size: 0.9rem;"><i class="bi bi-check-circle me-1"></i> Normal</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="alert alert-info mb-0">
+                        <i class="bi bi-info-circle-fill me-2"></i> Para cambiar la versión de la aplicación, cierra sesión y selecciona otra versión en la pantalla de login.
+                    </div>
                 </div>
             </div>
             

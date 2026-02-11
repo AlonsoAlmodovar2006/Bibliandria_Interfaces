@@ -38,11 +38,13 @@
     <!-- Búsqueda -->
     <div class="row mb-4">
         <div class="col-md-6">
-            <form method="get" class="search-bar">
-                <i class="bi bi-search search-icon"></i>
-                {{ form.query }}
+            <form method="get" class="search-bar d-flex">
+                <div class="position-relative flex-grow-1">
+                    <i class="bi bi-search search-icon"></i>
+                    {{ form.query }}
+                </div>
                 <button type="submit" class="btn btn-accent ms-2">
-                    <i class="bi bi-search"></i> Buscar
+                    <i class="bi bi-search"></i> <span class="d-none d-sm-inline">Buscar</span>
                 </button>
             </form>
         </div>
@@ -62,7 +64,7 @@
         <div class="col-sm-6 col-md-4 col-lg-3 animate-fade-in">
             <div class="card book-card h-100">
                 {% if libro.portada %}
-                <img src="{{ libro.portada.url }}" class="card-img-top book-cover" alt="{{ libro.titulo }}" style="height: 280px; object-fit: cover;">
+                <img src="{{ libro.portada.url }}" class="card-img-top book-cover" alt="{{ libro.titulo }}">
                 {% else %}
                 <div class="book-cover d-flex align-items-center justify-content-center text-white"
                      style="background: linear-gradient(135deg, var(--primary-light), var(--primary));">

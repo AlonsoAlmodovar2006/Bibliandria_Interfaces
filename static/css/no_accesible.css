@@ -1,0 +1,152 @@
+/* ====== BIBLIANDRIA - VERSIÓN NO ACCESIBLE ====== */
+/* 
+   Problemas SUTILES de accesibilidad que se observan en webs reales.
+   La web se ve aparentemente bien, pero falla en criterios WCAG 2.1.
+   
+   PROBLEMAS IMPLEMENTADOS:
+   1. Contraste insuficiente en textos secundarios (no cumple 4.5:1)
+   2. Sin indicadores de foco visibles (teclado inútil)
+   3. Links sin subrayado ni distinción clara
+   4. Textos en tamaño fijo (no respeta preferencias de usuario)
+   5. Color como único indicador de estado (sin iconos/texto)
+   6. Animación sin respetar prefers-reduced-motion
+   7. Áreas de clic justas (menores de 44px recomendados)
+   8. Bajo contraste en placeholders
+   9. Alertas sin iconos de contexto
+   10. Imágenes/portadas sin indicación textual alternativa
+*/
+
+/* ====== 1. CONTRASTE INSUFICIENTE en textos secundarios ====== */
+/* Ratio aprox 2.5:1 en vez de 4.5:1 mínimo WCAG AA */
+[data-version="no-accesible"] .text-muted,
+[data-version="no-accesible"] .lead {
+    color: #c0b8a8 !important;
+}
+
+[data-version="no-accesible"] .form-label {
+    color: #b5ad9d;
+}
+
+[data-version="no-accesible"] .card-body .text-muted {
+    color: #ccc5b5 !important;
+}
+
+/* ====== 2. SIN INDICADORES DE FOCO ====== */
+/* Imposible navegar con teclado - no se ve dónde estás */
+[data-version="no-accesible"] *:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+[data-version="no-accesible"] .btn:focus,
+[data-version="no-accesible"] .form-control:focus,
+[data-version="no-accesible"] .form-select:focus,
+[data-version="no-accesible"] a:focus,
+[data-version="no-accesible"] .nav-link:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+[data-version="no-accesible"] .form-control:focus,
+[data-version="no-accesible"] .form-select:focus {
+    border-color: #ddd !important;
+}
+
+/* ====== 3. LINKS SIN DISTINCIÓN ====== */
+/* No se distinguen del texto, solo por color (y sutil) */
+[data-version="no-accesible"] a {
+    text-decoration: none;
+}
+
+[data-version="no-accesible"] a:hover {
+    text-decoration: none;
+}
+
+[data-version="no-accesible"] .footer-bibliandria a {
+    text-decoration: none;
+    opacity: 0.85;
+}
+
+/* ====== 4. TAMAÑO FIJO: No respeta zoom/preferencias ====== */
+[data-version="no-accesible"] body {
+    font-size: 14px !important;  /* px en vez de rem, no escala */
+}
+
+[data-version="no-accesible"] .form-control,
+[data-version="no-accesible"] .form-select {
+    font-size: 13px !important;
+}
+
+[data-version="no-accesible"] .btn {
+    font-size: 13px !important;
+}
+
+/* ====== 5. COLOR COMO ÚNICO INDICADOR ====== */
+/* Ocultar iconos dentro de alertas - solo el color indica el tipo */
+[data-version="no-accesible"] .alert .bi {
+    display: none;
+}
+
+/* Badges sin iconos, solo color */
+[data-version="no-accesible"] .badge .bi {
+    display: none;
+}
+
+/* ====== 6. ANIMACIÓN SIN RESPETAR prefers-reduced-motion ====== */
+/* Elementos con animación continua que no se puede desactivar */
+[data-version="no-accesible"] .navbar-bibliandria .navbar-brand i {
+    animation: pulse-icon 2s ease-in-out infinite;
+}
+
+@keyframes pulse-icon {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* ====== 7. ÁREAS DE CLIC PEQUEÑAS ====== */
+/* Items del dropdown con poco padding (< 44px de alto) */
+[data-version="no-accesible"] .dropdown-item {
+    padding: 0.2rem 0.8rem;
+    line-height: 1.2;
+}
+
+/* Paginación con áreas pequeñas */
+[data-version="no-accesible"] .pagination .page-link {
+    padding: 0.2rem 0.45rem;
+    font-size: 0.75rem;
+}
+
+/* ====== 8. PLACEHOLDER CON BAJO CONTRASTE ====== */
+[data-version="no-accesible"] .form-control::placeholder {
+    color: #ddd;
+}
+
+/* ====== 9. CONTRAST EN CARD HEADERS ====== */
+/* Subtítulos de las cards con contraste bajo */
+[data-version="no-accesible"] .card-header h5 {
+    color: #b8b0a0;
+}
+
+/* ====== 10. STAT CARDS: color como único indicador ====== */
+/* Todas las stat cards del mismo color - solo texto diferencia */
+[data-version="no-accesible"] .stat-card.stat-books,
+[data-version="no-accesible"] .stat-card.stat-wishlist,
+[data-version="no-accesible"] .stat-card.stat-reviews,
+[data-version="no-accesible"] .stat-card.stat-visibility {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+}
+
+/* ====== 11. FOOTER: Contraste bajo ====== */
+[data-version="no-accesible"] .footer-bibliandria {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+[data-version="no-accesible"] .footer-bibliandria h5 {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+/* ====== 12. TABLAS: Encabezados sin distinción ====== */
+[data-version="no-accesible"] .table th {
+    font-weight: normal;
+    color: #bbb;
+}

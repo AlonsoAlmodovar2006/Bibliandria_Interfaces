@@ -18,15 +18,15 @@
         </p>
         {% if not user.is_authenticated %}
         <div class="d-flex gap-3 justify-content-center flex-wrap animate-fade-in animate-fade-in-delay-3">
-            <a href="{% url 'registro' %}" class="btn btn-light btn-lg px-5">
+            <a href="{% url 'registro' %}" class="btn btn-light btn-lg hero-btn">
                 <i class="bi bi-person-plus"></i> Registrarse
             </a>
-            <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg px-5">
+            <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg hero-btn">
                 <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
             </a>
         </div>
         {% else %}
-        <a href="{% url 'home' %}" class="btn btn-light btn-lg px-5 animate-fade-in animate-fade-in-delay-3">
+        <a href="{% url 'home' %}" class="btn btn-light btn-lg hero-btn animate-fade-in animate-fade-in-delay-3">
             <i class="bi bi-arrow-right"></i> Ir a Mi Biblioteca
         </a>
         {% endif %}

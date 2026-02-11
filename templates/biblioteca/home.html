@@ -79,7 +79,7 @@
         <h3 class="section-title"><i class="bi bi-clock-history" style="color: var(--accent);"></i> Libros Añadidos Recientemente</h3>
         <div class="row g-4">
             {% for libro in libros_recientes %}
-            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2-4 animate-fade-in">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3 animate-fade-in">
                 <div class="card book-card">
                     {% if libro.portada %}
                     <img src="{{ libro.portada.url }}" class="card-img-top book-cover" alt="{{ libro.titulo }}">

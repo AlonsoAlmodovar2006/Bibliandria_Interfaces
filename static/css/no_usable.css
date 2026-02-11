@@ -1,0 +1,133 @@
+/* ====== BIBLIANDRIA - VERSIÓN NO USABLE ====== */
+/* 
+   Problemas SUTILES de usabilidad que se observan en webs reales.
+   La web funciona y se ve "normal", pero la experiencia de uso 
+   tiene fricciones que un estudio de usabilidad detectaría.
+   
+   PROBLEMAS IMPLEMENTADOS:
+   1. Labels separados visualmente de sus inputs (proximidad)
+   2. Botón principal de acción sin jerarquía clara
+   3. Navbar sin indicar la página actual (ubicación)
+   4. Links difíciles de distinguir del texto normal
+   5. Feedback de alertas que desaparece muy rápido
+   6. Iconos sin texto en algunos sitios (solo icono)
+   7. Botón de eliminar sin diferencia respecto al de editar
+   8. Hover de la tabla sin feedback
+   9. Formulario de búsqueda poco visible
+   10. Acciones principales lejos del contenido relevante
+*/
+
+/* ====== 1. PROXIMIDAD: Labels separados de inputs ====== */
+/* El label está demasiado lejos del input, rompiendo la ley de proximidad */
+[data-version="no-usable"] .form-label {
+    margin-bottom: 1.2rem;
+}
+
+/* ====== 2. JERARQUÍA DE BOTONES: Todos los botones se ven igual ====== */
+/* No hay distinción entre acción principal y secundaria */
+[data-version="no-usable"] .btn-accent {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+[data-version="no-usable"] .btn-danger {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: white !important;
+}
+
+[data-version="no-usable"] .btn-success {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+[data-version="no-usable"] .btn-warning {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: white !important;
+}
+
+/* ====== 3. NAVEGACIÓN: Sin indicador de página activa ====== */
+[data-version="no-usable"] .navbar-bibliandria .nav-link.active,
+[data-version="no-usable"] .navbar-bibliandria .nav-link:hover {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    border-bottom: none !important;
+}
+
+/* ====== 4. LINKS: No se distinguen del texto ====== */
+[data-version="no-usable"] .card-body a,
+[data-version="no-usable"] .table a {
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+[data-version="no-usable"] .card-body a:hover,
+[data-version="no-usable"] .table a:hover {
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+/* ====== 5. FEEDBACK: Alertas con auto-cierre MUY rápido ====== */
+[data-version="no-usable"] .alert {
+    animation: fadeOutQuick 2s forwards;
+}
+
+@keyframes fadeOutQuick {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; pointer-events: none; }
+}
+
+/* ====== 6. ICONOS: Ocultar textos junto a iconos en navbar ====== */
+/* Solo se ven los iconos, sin texto descriptivo */
+[data-version="no-usable"] .navbar-bibliandria .nav-link span,
+[data-version="no-usable"] .navbar-bibliandria .dropdown-item span {
+    display: none;
+}
+
+/* ====== 7. TABLAS: Sin feedback de hover ====== */
+[data-version="no-usable"] .table-hover tbody tr:hover {
+    background-color: transparent !important;
+}
+
+/* ====== 8. CARDS: Sin sombra/elevación en hover ====== */
+[data-version="no-usable"] .book-card:hover,
+[data-version="no-usable"] .feature-card:hover,
+[data-version="no-usable"] .user-card:hover {
+    transform: none !important;
+    box-shadow: var(--card-shadow) !important;
+}
+
+/* ====== 9. FORMULARIOS: Placeholder como única indicación ====== */
+/* Los labels de los formularios son muy tenues */
+[data-version="no-usable"] .auth-card .form-label {
+    font-size: 0.7rem;
+    color: #bbb;
+}
+
+/* ====== 10. STAT CARDS: Números sin contexto ====== */
+/* Ocultar las etiquetas de las stats, dejando solo los números */
+[data-version="no-usable"] .stat-label {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* ====== 11. FOOTER: Links deshabilitados ====== */
+[data-version="no-usable"] .footer-bibliandria a {
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* ====== 12. DROPDOWN: Poco espacio entre items ====== */
+[data-version="no-usable"] .dropdown-item {
+    padding: 0.15rem 0.8rem;
+    font-size: 0.8rem;
+}
+
+/* ====== 13. BOTÓN de cerrar alerta difícil de pulsar ====== */
+[data-version="no-usable"] .alert .btn-close {
+    padding: 0.15rem;
+    opacity: 0.3;
+}
