@@ -60,7 +60,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button"
                             data-bs-toggle="dropdown">
-                            <i class="bi bi-shield-lock"></i> Admin
+                            <i class="bi bi-brush"></i> Interfaces
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="{% url 'usuarios_lista' %}"><i
@@ -69,6 +69,8 @@
                                         class="bi bi-camera-video me-2"></i>Análisis</a></li>
                             <li><a class="dropdown-item" href="{% url 'sobre_nosotros' %}"><i
                                         class="bi bi-info-circle me-2"></i>Sobre Nosotros</a></li>
+                            <li><a class="dropdown-item" href="{% url 'mapa_web' %}"><i
+                                        class="bi bi-diagram-3 me-2"></i>Mapa del Sitio</a></li>
                         </ul>
                     </li>
                     {% endif %}

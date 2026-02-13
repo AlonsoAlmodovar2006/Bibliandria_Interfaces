@@ -411,3 +411,11 @@ def sobre_nosotros(request):
         return HttpResponseForbidden('No tienes permisos para acceder a esta página.')
     return render(request, 'biblioteca/sobre_nosotros.html')
 
+
+@login_required
+def mapa_web(request):
+    """Mapa del sitio web - facilita la navegación a todos los usuarios"""
+    if not request.user.es_admin():
+        return HttpResponseForbidden('No tienes permisos para acceder a esta página.')
+    return render(request, 'biblioteca/mapa_web.html')
+

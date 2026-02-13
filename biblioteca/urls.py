@@ -36,6 +36,7 @@ urlpatterns = [
     path('usuarios/<int:pk>/privacidad/', views.usuario_cambiar_privacidad, name='usuario_cambiar_privacidad'),
     path('analisis/', views.analisis, name='analisis'),
     path('sobre-nosotros/', views.sobre_nosotros, name='sobre_nosotros'),
+    path('mapa-web/', views.mapa_web, name='mapa_web'),
     
     # Configuración
     path('configuracion/', views.configuracion, name='configuracion'),

@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+
+{% block title %}Mapa del Sitio - Bibliandria{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <h1 class="section-title mb-2">
+                <i class="bi bi-diagram-3"></i> Mapa del Sitio Web
+            </h1>
+            <p class="text-muted mb-4">
+                Mapa jerárquico con todas las páginas disponibles en Bibliandria.
+                Este mapa facilita la búsqueda de información a todos los usuarios.
+            </p>
+
+            <nav aria-label="Mapa del sitio web de Bibliandria">
+                <ol class="sitemap-list">
+
+                    <!-- 1. Páginas Públicas -->
+                    <li>
+                        <h2 class="sitemap-heading">Páginas Públicas</h2>
+                        <ol>
+                            <li>
+                                <a href="{% url 'landing' %}">Página de Inicio (Landing)</a>
+                                <span class="sitemap-desc">— Presentación general de Bibliandria</span>
+                            </li>
+                            <li>
+                                <a href="{% url 'login' %}">Iniciar Sesión</a>
+                                <span class="sitemap-desc">— Acceso para usuarios registrados</span>
+                            </li>
+                            <li>
+                                <a href="{% url 'registro' %}">Registrarse</a>
+                                <span class="sitemap-desc">— Crear una nueva cuenta de usuario</span>
+                            </li>
+                        </ol>
+                    </li>
+
+                    <!-- 2. Dashboard -->
+                    <li>
+                        <h2 class="sitemap-heading">Dashboard</h2>
+                        <ol>
+                            <li>
+                                <a href="{% url 'home' %}">Inicio / Panel principal</a>
+                                <span class="sitemap-desc">— Resumen de tu actividad y estadísticas</span>
+                            </li>
+                        </ol>
+                    </li>
+
+                    <!-- 3. Bibliotecas -->
+                    <li>
+                        <h2 class="sitemap-heading">Bibliotecas</h2>
+                        <ol>
+                            <li>
+                                <a href="{% url 'bibliotecas_publicas' %}">Bibliotecas Públicas</a>
+                                <span class="sitemap-desc">— Explorar las bibliotecas de otros usuarios</span>
+                            </li>
+                            <li>
+                                <a href="{% url 'mi_biblioteca' %}">Mi Biblioteca</a>
+                                <span class="sitemap-desc">— Ver y gestionar tu colección personal de libros</span>
+                            </li>
+                        </ol>
+                    </li>
+
+                    <!-- 4. Libros -->
+                    <li>
+                        <h2 class="sitemap-heading">Gestión de Libros</h2>
+                        <ol>
+                            <li>
+                                <a href="{% url 'libro_crear' %}">Añadir Nuevo Libro</a>
+                                <span class="sitemap-desc">— Registrar un nuevo libro en tu biblioteca</span>
+                            </li>
+                            <li>
+                                <a href="{% url 'libro_detalle' 24 %}">Detalle de Libro</a>
+                                <span class="sitemap-desc">— Información completa de un libro (ficha, reseñas y préstamos) (ejemplo id=24)</span>
+                            </li>
+                            <li>
+                                <a href="{% url 'libro_editar' 24 %}">Editar Libro</a>
+                                <span class="sitemap-desc">— Modificar los datos de un libro existente (ejemplo id=24)</span>
+                            </li>
+                            <li>
+                                <a href="{% url 'libro_eliminar' 24 %}">Eliminar Libro</a>
+                                <span class="sitemap-desc">— Eliminar un libro de tu biblioteca (ejemplo id=24)</span>
+                            </li>
+                        </ol>
+                    </li>
+
+                    <!-- 5. Reseñas -->
+                    <li>
+                        <h2 class="sitemap-heading">Reseñas</h2>
+                        <ol>
+                            <li>
+                                <a href="{% url 'resena_crear' 24 %}">Escribir Reseña</a>
+                                <span class="sitemap-desc">— Publicar una reseña sobre un libro (ejemplo id=24)</span>
+                            </li>
+                        </ol>
+                    </li>
+
+                    <!-- 6. Préstamos -->
+                    <li>
+                        <h2 class="sitemap-heading">Préstamos</h2>
+                        <ol>
+                            <li>
+                                <a href="{% url 'prestamo_crear' 24 %}">Registrar Préstamo</a>
+                                <span class="sitemap-desc">— Prestar un libro a otro usuario (ejemplo id=24)</span>
+                            </li>
+                            <li>
+                                <a href="#">Devolver Préstamo</a>
+                                <span class="sitemap-desc">— Marcar un préstamo como devuelto (NO HAY PRESTAMOS PENDIENTES)</span>
+                            </li>
+                        </ol>
+                    </li>
+
+                    <!-- 7. Lista de Deseos -->
+                    <li>
+                        <h2 class="sitemap-heading">Lista de Deseos</h2>
+                        <ol>
+                            <li>
+                                <a href="{% url 'lista_deseos' %}">Ver Lista de Deseos</a>
+                                <span class="sitemap-desc">— Libros que quieres conseguir</span>
+                            </li>
+                            <li>
+                                <a href="{% url 'lista_deseos_eliminar' 9 %}">Eliminar de Lista de Deseos</a>
+                                <span class="sitemap-desc">— Quitar un libro de tu lista de deseos (ejemplo id=9)</span>
+                            </li>
+                        </ol>
+                    </li>
+
+                    <!-- 8. Cuenta de Usuario -->
+                    <li>
+                        <h2 class="sitemap-heading">Cuenta de Usuario</h2>
+                        <ol>
+                            <li>
+                                <a href="{% url 'configuracion' %}">Configuración</a>
+                                <span class="sitemap-desc">— Ajustes de tu cuenta y privacidad de tu biblioteca</span>
+                            </li>
+                            <li>
+                                <a href="{% url 'logout' %}">Cerrar Sesión</a>
+                                <span class="sitemap-desc">— Salir de tu cuenta</span>
+                            </li>
+                        </ol>
+                    </li>
+
+                    <!-- 9. Administración -->
+                    {% if user.es_admin %}
+                    <li>
+                        <h2 class="sitemap-heading">Trabajo Diseño de Interfaces</h2>
+                        <ol>
+                            <li>
+                                <a href="{% url 'usuarios_lista' %}">Gestión de Usuarios</a>
+                                <span class="sitemap-desc">— Ver y administrar las cuentas de usuario</span>
+                            </li>
+                            <li>
+                                <a href="{% url 'analisis' %}">Análisis</a>
+                                <span class="sitemap-desc">— Vídeos de estudio de usabilidad</span>
+                            </li>
+                            <li>
+                                <a href="{% url 'sobre_nosotros' %}">Sobre Nosotros</a>
+                                <span class="sitemap-desc">— Información sobre el desarrollador y el proyecto</span>
+                            </li>
+                            <li>
+                                <a href="{% url 'mapa_web' %}">Mapa del Sitio Web</a>
+                                <span class="sitemap-desc">— Esta página: estructura jerárquica completa del sitio</span>
+                            </li>
+                        </ol>
+                    </li>
+                    {% endif %}
+
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ===== Mapa del Sitio - Estilos ===== */
+    .sitemap-list {
+        list-style: none;
+        padding-left: 0;
+        counter-reset: sitemap-section;
+    }
+
+    .sitemap-list > li {
+        margin-bottom: 1.5rem;
+        counter-increment: sitemap-section;
+    }
+
+    .sitemap-heading {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--primary-color, #6D4C41);
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.3rem;
+        border-bottom: 2px solid var(--primary-color, #6D4C41);
+        display: inline-block;
+    }
+
+    .sitemap-heading::before {
+        content: counter(sitemap-section) ". ";
+    }
+
+    .sitemap-list ol {
+        list-style: none;
+        padding-left: 1.5rem;
+        counter-reset: sitemap-item;
+    }
+
+    .sitemap-list ol > li {
+        counter-increment: sitemap-item;
+        padding: 0.4rem 0;
+        font-size: 1.05rem;
+        line-height: 1.6;
+    }
+
+    .sitemap-list ol > li::before {
+        content: counter(sitemap-section) "." counter(sitemap-item) " ";
+        font-weight: 600;
+        color: var(--primary-color, #6D4C41);
+        margin-right: 0.3rem;
+    }
+
+    .sitemap-list ol > li a {
+        color: var(--accent-color, #1565C0);
+        text-decoration: underline;
+        font-weight: 500;
+    }
+
+    .sitemap-list ol > li a:hover,
+    .sitemap-list ol > li a:focus {
+        color: var(--primary-color, #6D4C41);
+        text-decoration: underline;
+        outline: 2px solid var(--accent-color, #1565C0);
+        outline-offset: 2px;
+    }
+
+    .sitemap-desc {
+        color: #666;
+        font-size: 0.92rem;
+    }
+</style>
+{% endblock %}
