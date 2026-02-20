@@ -6,162 +6,97 @@
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-10">
-            <h1 class="section-title mb-2">
-                <i class="bi bi-diagram-3"></i> Mapa del Sitio Web
+            <h1 class="section-title mb-4">
+                <i class="bi bi-diagram-3"></i> Mapa jerárquico del sitio web
             </h1>
-            <p class="text-muted mb-4">
-                Mapa jerárquico con todas las páginas disponibles en Bibliandria.
-                Este mapa facilita la búsqueda de información a todos los usuarios.
-            </p>
 
             <nav aria-label="Mapa del sitio web de Bibliandria">
-                <ol class="sitemap-list">
+                <ol class="sitemap">
 
-                    <!-- 1. Páginas Públicas -->
+                    <!-- 1. Página de Inicio -->
                     <li>
-                        <h2 class="sitemap-heading">Páginas Públicas</h2>
+                        <a href="{% url 'landing' %}">Página de Inicio</a>
                         <ol>
-                            <li>
-                                <a href="{% url 'landing' %}">Página de Inicio (Landing)</a>
-                                <span class="sitemap-desc">— Presentación general de Bibliandria</span>
-                            </li>
-                            <li>
-                                <a href="{% url 'login' %}">Iniciar Sesión</a>
-                                <span class="sitemap-desc">— Acceso para usuarios registrados</span>
-                            </li>
-                            <li>
-                                <a href="{% url 'registro' %}">Registrarse</a>
-                                <span class="sitemap-desc">— Crear una nueva cuenta de usuario</span>
-                            </li>
+                            <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+                            <li><a href="{% url 'registro' %}">Registrarse</a></li>
                         </ol>
                     </li>
 
-                    <!-- 2. Dashboard -->
+                    <!-- 2. Panel Principal -->
                     <li>
-                        <h2 class="sitemap-heading">Dashboard</h2>
+                        <a href="{% url 'home' %}">Panel Principal</a>
                         <ol>
-                            <li>
-                                <a href="{% url 'home' %}">Inicio / Panel principal</a>
-                                <span class="sitemap-desc">— Resumen de tu actividad y estadísticas</span>
-                            </li>
-                        </ol>
-                    </li>
 
-                    <!-- 3. Bibliotecas -->
-                    <li>
-                        <h2 class="sitemap-heading">Bibliotecas</h2>
-                        <ol>
+                            <!-- 2.1 Bibliotecas Públicas -->
                             <li>
                                 <a href="{% url 'bibliotecas_publicas' %}">Bibliotecas Públicas</a>
-                                <span class="sitemap-desc">— Explorar las bibliotecas de otros usuarios</span>
+                                <ol>
+                                    <li><a href="{% url 'ver_biblioteca' 'maria_lectora' %}">Ver Biblioteca de Otro Usuario</a>
+                                        <span class="sitemap-note">(ej: maria_lectora)</span>
+                                    </li>
+                                </ol>
                             </li>
+
+                            <!-- 2.2 Mi Biblioteca -->
                             <li>
                                 <a href="{% url 'mi_biblioteca' %}">Mi Biblioteca</a>
-                                <span class="sitemap-desc">— Ver y gestionar tu colección personal de libros</span>
+                                <ol>
+                                    <li><a href="{% url 'libro_crear' %}">Añadir Nuevo Libro</a></li>
+                                    <li>
+                                        <a href="{% url 'libro_detalle' 24 %}">Detalle de Libro</a>
+                                        <span class="sitemap-note">(ej: id=24)</span>
+                                        <ol>
+                                            <li><a href="{% url 'libro_editar' 24 %}">Editar Libro</a></li>
+                                            <li><a href="{% url 'libro_eliminar' 24 %}">Eliminar Libro</a></li>
+                                            <li><a href="{% url 'resena_crear' 24 %}">Escribir Reseña</a></li>
+                                            <li>
+                                                <a href="{% url 'prestamo_crear' 24 %}">Registrar Préstamo</a>
+                                                <ol>
+                                                    <li><span class="sitemap-disabled">Devolver Préstamo</span>
+                                                        <span class="sitemap-note">(requiere préstamo activo)</span>
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                </ol>
                             </li>
+
+                            <!-- 2.3 Lista de Deseos -->
+                            <li>
+                                <a href="{% url 'lista_deseos' %}">Lista de Deseos</a>
+                                <ol>
+                                    <li><a href="{% url 'lista_deseos_eliminar' 9 %}">Eliminar de Lista de Deseos</a>
+                                        <span class="sitemap-note">(ej: id=9)</span>
+                                    </li>
+                                </ol>
+                            </li>
+
+                            <!-- 2.4 Configuración -->
+                            <li><a href="{% url 'configuracion' %}">Configuración</a></li>
+
+                            <!-- 2.5 Cerrar Sesión -->
+                            <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+
                         </ol>
                     </li>
 
-                    <!-- 4. Libros -->
-                    <li>
-                        <h2 class="sitemap-heading">Gestión de Libros</h2>
-                        <ol>
-                            <li>
-                                <a href="{% url 'libro_crear' %}">Añadir Nuevo Libro</a>
-                                <span class="sitemap-desc">— Registrar un nuevo libro en tu biblioteca</span>
-                            </li>
-                            <li>
-                                <a href="{% url 'libro_detalle' 24 %}">Detalle de Libro</a>
-                                <span class="sitemap-desc">— Información completa de un libro (ficha, reseñas y préstamos) (ejemplo id=24)</span>
-                            </li>
-                            <li>
-                                <a href="{% url 'libro_editar' 24 %}">Editar Libro</a>
-                                <span class="sitemap-desc">— Modificar los datos de un libro existente (ejemplo id=24)</span>
-                            </li>
-                            <li>
-                                <a href="{% url 'libro_eliminar' 24 %}">Eliminar Libro</a>
-                                <span class="sitemap-desc">— Eliminar un libro de tu biblioteca (ejemplo id=24)</span>
-                            </li>
-                        </ol>
-                    </li>
-
-                    <!-- 5. Reseñas -->
-                    <li>
-                        <h2 class="sitemap-heading">Reseñas</h2>
-                        <ol>
-                            <li>
-                                <a href="{% url 'resena_crear' 24 %}">Escribir Reseña</a>
-                                <span class="sitemap-desc">— Publicar una reseña sobre un libro (ejemplo id=24)</span>
-                            </li>
-                        </ol>
-                    </li>
-
-                    <!-- 6. Préstamos -->
-                    <li>
-                        <h2 class="sitemap-heading">Préstamos</h2>
-                        <ol>
-                            <li>
-                                <a href="{% url 'prestamo_crear' 24 %}">Registrar Préstamo</a>
-                                <span class="sitemap-desc">— Prestar un libro a otro usuario (ejemplo id=24)</span>
-                            </li>
-                            <li>
-                                <a href="#">Devolver Préstamo</a>
-                                <span class="sitemap-desc">— Marcar un préstamo como devuelto (NO HAY PRESTAMOS PENDIENTES)</span>
-                            </li>
-                        </ol>
-                    </li>
-
-                    <!-- 7. Lista de Deseos -->
-                    <li>
-                        <h2 class="sitemap-heading">Lista de Deseos</h2>
-                        <ol>
-                            <li>
-                                <a href="{% url 'lista_deseos' %}">Ver Lista de Deseos</a>
-                                <span class="sitemap-desc">— Libros que quieres conseguir</span>
-                            </li>
-                            <li>
-                                <a href="{% url 'lista_deseos_eliminar' 9 %}">Eliminar de Lista de Deseos</a>
-                                <span class="sitemap-desc">— Quitar un libro de tu lista de deseos (ejemplo id=9)</span>
-                            </li>
-                        </ol>
-                    </li>
-
-                    <!-- 8. Cuenta de Usuario -->
-                    <li>
-                        <h2 class="sitemap-heading">Cuenta de Usuario</h2>
-                        <ol>
-                            <li>
-                                <a href="{% url 'configuracion' %}">Configuración</a>
-                                <span class="sitemap-desc">— Ajustes de tu cuenta y privacidad de tu biblioteca</span>
-                            </li>
-                            <li>
-                                <a href="{% url 'logout' %}">Cerrar Sesión</a>
-                                <span class="sitemap-desc">— Salir de tu cuenta</span>
-                            </li>
-                        </ol>
-                    </li>
-
-                    <!-- 9. Administración -->
                     {% if user.es_admin %}
+                    <!-- 3. Trabajo Diseño de Interfaces -->
                     <li>
-                        <h2 class="sitemap-heading">Trabajo Diseño de Interfaces</h2>
+                        <span class="sitemap-category">Trabajo Diseño de Interfaces</span>
                         <ol>
                             <li>
                                 <a href="{% url 'usuarios_lista' %}">Gestión de Usuarios</a>
-                                <span class="sitemap-desc">— Ver y administrar las cuentas de usuario</span>
+                                <ol>
+                                    <li><a href="{% url 'usuario_cambiar_privacidad' 1 %}">Cambiar Privacidad de Usuario</a>
+                                        <span class="sitemap-note">(ej: id=1)</span>
+                                    </li>
+                                </ol>
                             </li>
-                            <li>
-                                <a href="{% url 'analisis' %}">Análisis</a>
-                                <span class="sitemap-desc">— Vídeos de estudio de usabilidad</span>
-                            </li>
-                            <li>
-                                <a href="{% url 'sobre_nosotros' %}">Sobre Nosotros</a>
-                                <span class="sitemap-desc">— Información sobre el desarrollador y el proyecto</span>
-                            </li>
-                            <li>
-                                <a href="{% url 'mapa_web' %}">Mapa del Sitio Web</a>
-                                <span class="sitemap-desc">— Esta página: estructura jerárquica completa del sitio</span>
-                            </li>
+                            <li><a href="{% url 'analisis' %}">Análisis de Usabilidad</a></li>
+                            <li><a href="{% url 'sobre_nosotros' %}">Sobre Nosotros</a></li>
+                            <li><a href="{% url 'mapa_web' %}">Mapa del Sitio Web</a></li>
                         </ol>
                     </li>
                     {% endif %}
@@ -173,69 +108,70 @@
 </div>
 
 <style>
-    /* ===== Mapa del Sitio - Estilos ===== */
-    .sitemap-list {
+    /* ===== Mapa del Sitio - Estilos jerárquicos ===== */
+    .sitemap {
         list-style: none;
         padding-left: 0;
-        counter-reset: sitemap-section;
     }
 
-    .sitemap-list > li {
-        margin-bottom: 1.5rem;
-        counter-increment: sitemap-section;
+    .sitemap li {
+        padding: 0.15rem 0;
+        line-height: 1.8;
     }
 
-    .sitemap-heading {
-        font-size: 1.25rem;
+    /* Nivel 1 - raíz */
+    .sitemap > li {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
         font-weight: 600;
+    }
+
+    .sitemap > li > a,
+    .sitemap > li > .sitemap-category {
         color: var(--primary-color, #6D4C41);
-        margin-bottom: 0.5rem;
-        padding-bottom: 0.3rem;
-        border-bottom: 2px solid var(--primary-color, #6D4C41);
-        display: inline-block;
+        font-size: 1.15rem;
     }
 
-    .sitemap-heading::before {
-        content: counter(sitemap-section) ". ";
+    .sitemap-category {
+        font-weight: 700;
     }
 
-    .sitemap-list ol {
+    /* Todas las sublistas */
+    .sitemap ol {
         list-style: none;
         padding-left: 1.5rem;
-        counter-reset: sitemap-item;
+        margin: 0;
+        border-left: 2px solid var(--primary-color-light, #D7CCC8);
     }
 
-    .sitemap-list ol > li {
-        counter-increment: sitemap-item;
-        padding: 0.4rem 0;
-        font-size: 1.05rem;
-        line-height: 1.6;
+    .sitemap ol li {
+        font-weight: 400;
+        font-size: 1rem;
     }
 
-    .sitemap-list ol > li::before {
-        content: counter(sitemap-section) "." counter(sitemap-item) " ";
-        font-weight: 600;
-        color: var(--primary-color, #6D4C41);
-        margin-right: 0.3rem;
-    }
-
-    .sitemap-list ol > li a {
+    /* Enlaces */
+    .sitemap a {
         color: var(--accent-color, #1565C0);
         text-decoration: underline;
-        font-weight: 500;
     }
 
-    .sitemap-list ol > li a:hover,
-    .sitemap-list ol > li a:focus {
+    .sitemap a:hover,
+    .sitemap a:focus {
         color: var(--primary-color, #6D4C41);
-        text-decoration: underline;
-        outline: 2px solid var(--accent-color, #1565C0);
-        outline-offset: 2px;
     }
 
-    .sitemap-desc {
-        color: #666;
-        font-size: 0.92rem;
+    /* Notas pequeñas */
+    .sitemap-note {
+        color: #888;
+        font-size: 0.82rem;
+        font-style: italic;
+        font-weight: 400;
+    }
+
+    /* Enlace deshabilitado */
+    .sitemap-disabled {
+        color: #aaa;
+        font-weight: 400;
     }
 </style>
 {% endblock %}

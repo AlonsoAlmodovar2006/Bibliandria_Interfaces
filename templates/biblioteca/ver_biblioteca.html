@@ -51,7 +51,9 @@
         <div class="col-md-6 text-md-end mt-2 mt-md-0">
             {% if libros %}
             <span class="text-muted">
-                <i class="bi bi-book"></i> {{ libros.count }} libro{{ libros.count|pluralize }}
+                <i class="bi bi-book"></i>
+                {{ libros.count }}
+                libro{{ libros.count|pluralize }}
             </span>
             {% endif %}
         </div>

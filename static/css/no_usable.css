@@ -1,133 +1,197 @@
 /* ====== BIBLIANDRIA - VERSIÓN NO USABLE ====== */
-/* 
-   Problemas SUTILES de usabilidad que se observan en webs reales.
-   La web funciona y se ve "normal", pero la experiencia de uso 
-   tiene fricciones que un estudio de usabilidad detectaría.
-   
-   PROBLEMAS IMPLEMENTADOS:
-   1. Labels separados visualmente de sus inputs (proximidad)
-   2. Botón principal de acción sin jerarquía clara
-   3. Navbar sin indicar la página actual (ubicación)
-   4. Links difíciles de distinguir del texto normal
-   5. Feedback de alertas que desaparece muy rápido
-   6. Iconos sin texto en algunos sitios (solo icono)
-   7. Botón de eliminar sin diferencia respecto al de editar
-   8. Hover de la tabla sin feedback
-   9. Formulario de búsqueda poco visible
-   10. Acciones principales lejos del contenido relevante
+/*
+   12 violaciones graves de los principios de Jakob Nielsen.
+   La web se ve profesional y "bonita", pero tiene 12 fallos
+   de usabilidad que un estudio detectaría.
+
+   FALLO 1  (6.1) — Alertas de feedback desaparecen demasiado rápido
+   FALLO 2  (6.1) — Sin indicador de página activa en la navbar
+   FALLO 3  (6.2) — Textos de botones con jerga técnica (vía JS)
+   FALLO 4  (6.2) — Iconos que no corresponden a su función (vía JS)
+   FALLO 5  (6.3) — Botones "Cancelar" ocultos en formularios
+   FALLO 6  (6.3) — Confirmaciones de eliminación sin contexto
+   FALLO 7  (6.4) — Breadcrumbs ocultos
+   FALLO 8  (6.4) — Placeholders transparentes en campos de formulario
+   FALLO 9  (6.5) — Barra de búsqueda oculta
+   FALLO 10 (6.5) — Acciones rápidas del dashboard ocultas
+   FALLO 11 (6.6) — Colores de botones invertidos (eliminar=verde, guardar=rojo)
+   FALLO 12 (6.6) — Navbar se reordena aleatoriamente (vía JS)
 */
 
-/* ====== 1. PROXIMIDAD: Labels separados de inputs ====== */
-/* El label está demasiado lejos del input, rompiendo la ley de proximidad */
-[data-version="no-usable"] .form-label {
-    margin-bottom: 1.2rem;
+
+/* =========================================================
+   FALLO 1 (6.1 Visibilidad del estado del sistema)
+   Las alertas de éxito/error desaparecen en ~1.5 segundos.
+   El usuario no tiene tiempo de leer el mensaje de feedback.
+   ========================================================= */
+[data-version="no-usable"] .alert.alert-dismissible {
+    animation: vanishAlert 1.5s forwards;
 }
 
-/* ====== 2. JERARQUÍA DE BOTONES: Todos los botones se ven igual ====== */
-/* No hay distinción entre acción principal y secundaria */
-[data-version="no-usable"] .btn-accent {
-    background: var(--primary) !important;
-    border-color: var(--primary) !important;
+@keyframes vanishAlert {
+    0%   { opacity: 1; max-height: 200px; }
+    70%  { opacity: 1; }
+    100% { opacity: 0; max-height: 0; padding: 0; margin: 0; overflow: hidden; pointer-events: none; }
 }
 
+
+/* =========================================================
+   FALLO 2 (6.1 Visibilidad del estado del sistema)
+   No hay indicador visual de la página actual en la navbar.
+   Todos los links se ven iguales; el usuario no sabe dónde está.
+   ========================================================= */
+[data-version="no-usable"] .navbar-bibliandria .nav-link.active,
+[data-version="no-usable"] .navbar-bibliandria .nav-link:hover {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    border-bottom: none !important;
+}
+
+
+/* =========================================================
+   FALLOS 3 y 4 (6.2 Relación sistema–mundo real)
+   Implementados en JavaScript:
+   - Fallo 3: Textos de botones reemplazados por jerga técnica
+   - Fallo 4: Iconos de acciones intercambiados
+   (No requieren CSS adicional)
+   ========================================================= */
+
+
+/* =========================================================
+   FALLO 5 (6.3 Prevención de errores y libertad de usuario)
+   Los botones "Cancelar" están ocultos en todos los formularios
+   y páginas de confirmación. El usuario no puede arrepentirse
+   fácilmente de una acción.
+   ========================================================= */
+[data-version="no-usable"] form .btn-outline-secondary,
+[data-version="no-usable"] .confirm-card .btn-outline-secondary {
+    display: none !important;
+}
+
+
+/* =========================================================
+   FALLO 6 (6.3 Prevención de errores y libertad de usuario)
+   Las páginas de confirmación de eliminación no muestran qué
+   se va a borrar. El usuario pulsa "Eliminar" sin saber qué
+   está eliminando exactamente.
+   ========================================================= */
+
+/* Ocultar la alerta con el nombre del libro/item que se va a borrar */
+[data-version="no-usable"] .confirm-card .alert {
+    display: none !important;
+}
+
+/* Ocultar el aviso de "Esta acción no se puede deshacer" */
+[data-version="no-usable"] .confirm-card p.text-danger {
+    display: none !important;
+}
+
+
+/* =========================================================
+   FALLO 7 (6.4 Reconocer antes de recordar)
+   Los breadcrumbs (migas de pan) están ocultos. El usuario
+   no puede ver su posición en la jerarquía del sitio y tiene
+   que recordar cómo llegó a la página actual.
+   ========================================================= */
+[data-version="no-usable"] .breadcrumb,
+[data-version="no-usable"] nav[aria-label="breadcrumb"] {
+    display: none !important;
+}
+
+
+/* =========================================================
+   FALLO 8 (6.4 Reconocer antes de recordar)
+   Los placeholders de los campos de formulario son transparentes.
+   Los campos aparecen completamente vacíos, sin ninguna pista
+   de qué debe escribirse en ellos. El usuario tiene que recordar
+   qué formato o dato se espera.
+   ========================================================= */
+[data-version="no-usable"] input::placeholder,
+[data-version="no-usable"] textarea::placeholder {
+    color: transparent !important;
+}
+
+
+/* =========================================================
+   FALLO 9 (6.5 Flexibilidad y eficiencia de uso)
+   La barra de búsqueda está oculta. Los usuarios experimentados
+   no pueden buscar directamente; deben navegar manualmente
+   entre todos los libros para encontrar el que buscan.
+   ========================================================= */
+[data-version="no-usable"] .search-bar {
+    display: none !important;
+}
+
+
+/* =========================================================
+   FALLO 10 (6.5 Flexibilidad y eficiencia de uso)
+   Los atajos de "Acciones Rápidas" del dashboard están ocultos.
+   El usuario pierde los accesos directos a tareas frecuentes
+   y debe usar siempre la navegación principal.
+   ========================================================= */
+[data-version="no-usable"] .quick-action-btn {
+    display: none !important;
+}
+
+
+/* =========================================================
+   FALLO 11 (6.6 Modelos mentales)
+   Los colores de los botones están INVERTIDOS:
+   - Eliminar/peligro se muestra en VERDE (parece seguro)
+   - Guardar/confirmar se muestra en ROJO (parece peligroso)
+   Rompe la asociación universal verde=ok / rojo=peligro.
+   ========================================================= */
+
+/* Botones de eliminar/peligro → verde engañoso */
 [data-version="no-usable"] .btn-danger {
-    background: var(--primary) !important;
-    border-color: var(--primary) !important;
+    background-color: var(--success) !important;
+    border-color: var(--success) !important;
+    color: white !important;
+}
+
+[data-version="no-usable"] .btn-outline-danger {
+    color: var(--success) !important;
+    border-color: var(--success) !important;
+}
+
+[data-version="no-usable"] .btn-outline-danger:hover {
+    background-color: var(--success) !important;
+    color: white !important;
+}
+
+/* Cabecera de confirmación de eliminación → verde */
+[data-version="no-usable"] .confirm-card .card-header.bg-danger {
+    background-color: var(--success) !important;
+}
+
+/* Botones seguros (guardar, confirmar, aceptar) → rojo alarmante */
+[data-version="no-usable"] .btn-accent {
+    background-color: var(--danger) !important;
+    border-color: var(--danger) !important;
     color: white !important;
 }
 
 [data-version="no-usable"] .btn-success {
-    background: var(--primary) !important;
-    border-color: var(--primary) !important;
-}
-
-[data-version="no-usable"] .btn-warning {
-    background: var(--primary) !important;
-    border-color: var(--primary) !important;
+    background-color: var(--danger) !important;
+    border-color: var(--danger) !important;
     color: white !important;
 }
 
-/* ====== 3. NAVEGACIÓN: Sin indicador de página activa ====== */
-[data-version="no-usable"] .navbar-bibliandria .nav-link.active,
-[data-version="no-usable"] .navbar-bibliandria .nav-link:hover {
-    background: transparent !important;
-    color: rgba(255, 255, 255, 0.8) !important;
-    border-bottom: none !important;
+/* Cabecera de confirmación de devolución → roja */
+[data-version="no-usable"] .card-header.bg-success {
+    background-color: var(--danger) !important;
 }
 
-/* ====== 4. LINKS: No se distinguen del texto ====== */
-[data-version="no-usable"] .card-body a,
-[data-version="no-usable"] .table a {
-    color: var(--text-dark);
-    text-decoration: none;
+/* Botón de registro en navbar → rojo */
+[data-version="no-usable"] .btn-nav-register,
+[data-version="no-usable"] .navbar-bibliandria .nav-link.btn-nav-register {
+    background: var(--danger) !important;
+    color: white !important;
 }
 
-[data-version="no-usable"] .card-body a:hover,
-[data-version="no-usable"] .table a:hover {
-    color: var(--text-dark);
-    text-decoration: none;
-}
 
-/* ====== 5. FEEDBACK: Alertas con auto-cierre MUY rápido ====== */
-[data-version="no-usable"] .alert {
-    animation: fadeOutQuick 2s forwards;
-}
-
-@keyframes fadeOutQuick {
-    0% { opacity: 1; }
-    70% { opacity: 1; }
-    100% { opacity: 0; pointer-events: none; }
-}
-
-/* ====== 6. ICONOS: Ocultar textos junto a iconos en navbar ====== */
-/* Solo se ven los iconos, sin texto descriptivo */
-[data-version="no-usable"] .navbar-bibliandria .nav-link span,
-[data-version="no-usable"] .navbar-bibliandria .dropdown-item span {
-    display: none;
-}
-
-/* ====== 7. TABLAS: Sin feedback de hover ====== */
-[data-version="no-usable"] .table-hover tbody tr:hover {
-    background-color: transparent !important;
-}
-
-/* ====== 8. CARDS: Sin sombra/elevación en hover ====== */
-[data-version="no-usable"] .book-card:hover,
-[data-version="no-usable"] .feature-card:hover,
-[data-version="no-usable"] .user-card:hover {
-    transform: none !important;
-    box-shadow: var(--card-shadow) !important;
-}
-
-/* ====== 9. FORMULARIOS: Placeholder como única indicación ====== */
-/* Los labels de los formularios son muy tenues */
-[data-version="no-usable"] .auth-card .form-label {
-    font-size: 0.7rem;
-    color: #bbb;
-}
-
-/* ====== 10. STAT CARDS: Números sin contexto ====== */
-/* Ocultar las etiquetas de las stats, dejando solo los números */
-[data-version="no-usable"] .stat-label {
-    font-size: 0.6rem;
-    color: rgba(255, 255, 255, 0.4);
-}
-
-/* ====== 11. FOOTER: Links deshabilitados ====== */
-[data-version="no-usable"] .footer-bibliandria a {
-    cursor: default;
-    pointer-events: none;
-    opacity: 0.5;
-}
-
-/* ====== 12. DROPDOWN: Poco espacio entre items ====== */
-[data-version="no-usable"] .dropdown-item {
-    padding: 0.15rem 0.8rem;
-    font-size: 0.8rem;
-}
-
-/* ====== 13. BOTÓN de cerrar alerta difícil de pulsar ====== */
-[data-version="no-usable"] .alert .btn-close {
-    padding: 0.15rem;
-    opacity: 0.3;
-}
+/* =========================================================
+   FALLO 12 (6.6 Modelos mentales)
+   La navbar se reordena aleatoriamente en cada carga (vía JS).
+   (No requiere CSS adicional)
+   ========================================================= */

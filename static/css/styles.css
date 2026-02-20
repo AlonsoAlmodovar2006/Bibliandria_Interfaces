@@ -7,19 +7,30 @@
     --primary: #1a2a3a;
     --primary-light: #2c4a6e;
     --primary-dark: #0f1a26;
-    --accent: #c8a45a;
-    --accent-light: #e0c882;
-    --accent-dark: #a8843a;
+
+    --accent: #b8923f;
+    /* un poco más oscuro para mejor contraste */
+    --accent-light: #d4b25f;
+    --accent-dark: #6a4e1a;
+
     --cream: #faf6ee;
-    --cream-dark: #f0e8d8;
-    --text-dark: #1a1a2e;
-    --text-muted: #6b7280;
-    --success: #2d8a56;
-    --danger: #c0392b;
-    --info: #2980b9;
-    --warning: #d4a017;
+    --cream-dark: #efe4cf;
+
+    --text-dark: #111827;
+    /* más oscuro que antes */
+    --text-muted: #2f3e4e;
+    /* antes #4b5563 → ahora más contraste */
+
+    --success: #1f7a4c;
+    /* ligeramente más oscuro */
+    --danger: #a93226;
+    --info: #1f6fa5;
+    --warning: #b8860b;
+    /* dorado más profundo */
+
     --card-shadow: 0 4px 20px rgba(26, 42, 58, 0.08);
     --card-shadow-hover: 0 12px 40px rgba(26, 42, 58, 0.15);
+
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --border-radius: 12px;
     --border-radius-sm: 8px;
@@ -41,8 +52,18 @@ body {
     line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6,
-.display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6 {
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 600;
     color: var(--primary);
@@ -50,7 +71,6 @@ h1, h2, h3, h4, h5, h6,
 
 .lead {
     font-weight: 400;
-    color: var(--text-muted);
 }
 
 a {
@@ -150,7 +170,8 @@ a:hover {
 }
 
 /* Botón de registro en navbar */
-.btn-nav-register {
+.btn-nav-register,
+.navbar-bibliandria .nav-link.btn-nav-register {
     background: var(--accent) !important;
     color: var(--primary) !important;
     font-weight: 600 !important;
@@ -322,7 +343,7 @@ a:hover {
     left: 0;
     right: 0;
     height: 60px;
-    background: linear-gradient(transparent, rgba(0,0,0,0.1));
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
 }
 
 .book-card .book-cover img {
@@ -389,7 +410,7 @@ img.book-cover {
     font-size: 4rem;
     letter-spacing: 3px;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .hero-title i {
@@ -429,7 +450,7 @@ img.book-cover {
 }
 
 .hero-section .btn-outline-light {
-    border: 2px solid rgba(255,255,255,0.6);
+    border: 2px solid rgba(255, 255, 255, 0.6);
     color: white;
     font-weight: 600;
     padding: 0.8rem 2.5rem;
@@ -437,7 +458,7 @@ img.book-cover {
 }
 
 .hero-section .btn-outline-light:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-color: var(--accent);
     color: var(--accent);
 }
@@ -538,7 +559,7 @@ img.book-cover {
 }
 
 .stat-card.stat-visibility {
-    background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+    background: linear-gradient(135deg, #6d4c14, #8a6a2a);
 }
 
 .stat-card .stat-number {
@@ -551,7 +572,7 @@ img.book-cover {
 
 .stat-card .stat-label {
     font-size: 0.9rem;
-    opacity: 0.85;
+    opacity: 1;
     font-weight: 400;
 }
 
@@ -1026,6 +1047,7 @@ img.book-cover {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -1036,14 +1058,23 @@ img.book-cover {
     animation: fadeInUp 0.5s ease-out forwards;
 }
 
-.animate-fade-in-delay-1 { animation-delay: 0.1s; }
-.animate-fade-in-delay-2 { animation-delay: 0.2s; }
-.animate-fade-in-delay-3 { animation-delay: 0.3s; }
+.animate-fade-in-delay-1 {
+    animation-delay: 0.1s;
+}
+
+.animate-fade-in-delay-2 {
+    animation-delay: 0.2s;
+}
+
+.animate-fade-in-delay-3 {
+    animation-delay: 0.3s;
+}
 
 /* ====== RESPONSIVE ====== */
 
 /* === TABLET (max-width: 991px) === */
 @media (max-width: 991px) {
+
     /* Hero */
     .hero-section {
         padding: 4rem 0;
@@ -1102,6 +1133,7 @@ img.book-cover {
 
 /* === TABLET PORTRAIT (max-width: 768px) === */
 @media (max-width: 768px) {
+
     /* Hero */
     .hero-section {
         padding: 3rem 0;
@@ -1343,6 +1375,7 @@ img.book-cover {
 
 /* === MOBILE (max-width: 576px) === */
 @media (max-width: 576px) {
+
     /* Hero */
     .hero-section {
         padding: 2.5rem 0;
@@ -1625,7 +1658,7 @@ img.book-cover {
         font-size: 0.8rem;
     }
 
-    .breadcrumb-item + .breadcrumb-item::before {
+    .breadcrumb-item+.breadcrumb-item::before {
         padding: 0 0.3rem;
     }
 

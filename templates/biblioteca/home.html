@@ -11,7 +11,7 @@
         </h1>
         <p class="lead">Bienvenido de nuevo, <strong>{{ user.first_name|default:user.username }}</strong></p>
     </div>
-    
+
     <!-- Estadísticas -->
     <div class="row g-4 mb-5">
         <div class="col-md-4 animate-fade-in">
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-4 animate-fade-in animate-fade-in-delay-1">
             <div class="stat-card stat-wishlist">
                 <div class="d-flex justify-content-between align-items-center">
@@ -37,12 +37,13 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-4 animate-fade-in animate-fade-in-delay-2">
             <div class="stat-card stat-visibility">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <div class="stat-number">{% if user.biblioteca_publica %}Pública{% else %}Privada{% endif %}</div>
+                        <div class="stat-number">{% if user.biblioteca_publica %}Pública{% else %}Privada{% endif %}
+                        </div>
                         <div class="stat-label">Visibilidad de Biblioteca</div>
                     </div>
                     <i class="bi bi-{% if user.biblioteca_publica %}eye{% else %}eye-slash{% endif %} stat-icon"></i>
@@ -50,10 +51,11 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Acciones Rápidas -->
     <div class="mb-5">
-        <h3 class="section-title"><i class="bi bi-lightning-charge" style="color: var(--accent);"></i> Acciones Rápidas</h3>
+        <h3 class="section-title"><i class="bi bi-lightning-charge" style="color: var(--accent);"></i> Acciones Rápidas
+        </h3>
         <div class="d-flex gap-3 flex-wrap">
             <a href="{% url 'libro_crear' %}" class="quick-action-btn action-primary">
                 <i class="bi bi-plus-circle"></i> Añadir Libro
@@ -72,11 +74,12 @@
             </a>
         </div>
     </div>
-    
+
     <!-- Libros Recientes -->
     {% if libros_recientes %}
     <div>
-        <h3 class="section-title"><i class="bi bi-clock-history" style="color: var(--accent);"></i> Libros Añadidos Recientemente</h3>
+        <h3 class="section-title"><i class="bi bi-clock-history" style="color: var(--accent);"></i> Libros Añadidos
+            Recientemente</h3>
         <div class="row g-4">
             {% for libro in libros_recientes %}
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 animate-fade-in">
@@ -84,8 +87,8 @@
                     {% if libro.portada %}
                     <img src="{{ libro.portada.url }}" class="card-img-top book-cover" alt="{{ libro.titulo }}">
                     {% else %}
-                    <div class="book-cover d-flex align-items-center justify-content-center text-white" 
-                         style="background: linear-gradient(135deg, var(--primary-light), var(--primary));">
+                    <div class="book-cover d-flex align-items-center justify-content-center text-white"
+                        style="background: linear-gradient(135deg, var(--primary-light), var(--primary));">
                         <i class="bi bi-book display-3" style="color: var(--accent); opacity: 0.7;"></i>
                     </div>
                     {% endif %}

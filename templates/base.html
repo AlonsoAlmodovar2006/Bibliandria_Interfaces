@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="es" {% if request.session.version and request.session.version != 'normal' %}data-version="{{ request.session.version }}"{% endif %}>
+<html {% if request.session.version != 'no-accesible' %}lang="es"{% endif %} {% if request.session.version and request.session.version != 'normal' %}data-version="{{ request.session.version }}"{% endif %}>
 
 <head>
     <meta charset="UTF-8">
@@ -28,14 +28,14 @@
 
 <body>
     <!-- Navegación -->
-    <nav class="navbar navbar-expand-lg navbar-bibliandria">
+    {% if request.session.version == 'no-accesible' %}<div{% else %}<nav{% endif %} class="navbar navbar-expand-lg navbar-bibliandria">
         <div class="container">
             <a class="navbar-brand"
                 href="{% if user.is_authenticated %}{% url 'home' %}{% else %}{% url 'landing' %}{% endif %}">
                 <i class="bi bi-book-half"></i> Bibliandria
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menú de navegación">
+                {% if request.session.version != 'no-accesible' %}aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menú de navegación"{% endif %}>
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -46,6 +46,13 @@
                             <i class="bi bi-house-door"></i> Inicio
                         </a>
                     </li>
+                    {% if request.session.version == 'no-accesible' %}
+                    <li class="nav-item">
+                        <a class="nav-link btn-nav-register ms-1" href="{% url 'libro_crear' %}">
+                            <i class="bi bi-plus-lg"></i> Nuevo Libro
+                        </a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'bibliotecas_publicas' %}">
                             <i class="bi bi-people"></i> Bibliotecas
@@ -74,11 +81,13 @@
                         </ul>
                     </li>
                     {% endif %}
+                    {% if request.session.version != 'no-accesible' %}
                     <li class="nav-item">
                         <a class="nav-link btn-nav-register ms-1" href="{% url 'libro_crear' %}">
                             <i class="bi bi-plus-lg"></i> Nuevo Libro
                         </a>
                     </li>
+                    {% endif %}
                     <li class="nav-item dropdown ms-2">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                             data-bs-toggle="dropdown">
@@ -111,13 +120,13 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    {% if request.session.version == 'no-accesible' %}</div>{% else %}</nav>{% endif %}
 
     <!-- Mensajes -->
     {% if messages %}
     <div class="container mt-4">
         {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show animate-fade-in" role="alert">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show animate-fade-in" {% if request.session.version != 'no-accesible' %}role="alert"{% endif %}>
             {% if message.tags == 'success' %}
             <i class="bi bi-check-circle-fill me-2"></i>
             {% elif message.tags == 'error' or message.tags == 'danger' %}
@@ -128,7 +137,12 @@
             <i class="bi bi-info-circle-fill me-2"></i>
             {% endif %}
             {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button 
+                type="button" 
+                class="btn-close" 
+                data-bs-dismiss="alert"
+                {% if request.session.version != 'no-accesible' %}aria-label="Cerrar"{% endif %}>
+            </button>
         </div>
         {% endfor %}
     </div>
@@ -140,7 +154,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer-bibliandria">
+    {% if request.session.version == 'no-accesible' %}<div{% else %}<footer{% endif %} class="footer-bibliandria">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-3">
@@ -184,12 +198,113 @@
                     Interfaces.</small>
             </div>
         </div>
-    </footer>
+    {% if request.session.version == 'no-accesible' %}</div>{% else %}</footer>{% endif %}
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     {% block extra_js %}{% endblock %}
+
+    {% if request.session.version == 'no-usable' %}
+    <!-- ====== NO-USABLE: Fallos de usabilidad vía JavaScript ====== -->
+    <script>
+    (function() {
+
+        /* ============================================
+           FALLO 3 (6.2 Relación sistema–mundo real)
+           Textos de botones reemplazados por jerga técnica
+           de programación que el usuario medio no entiende.
+           ============================================ */
+        var jargon = {
+            'Guardar Libro':          'Ejecutar Persistencia de Entidad',
+            'Guardar Reseña':         'Commit Valoración a DB',
+            'Sí, Eliminar':           'DROP Registro',
+            'Sí, Devuelto':           'Commit Devolución',
+            'Registrar Préstamo':     'INSERT INTO Préstamos',
+            'Enviar Solicitud':       'POST /api/request',
+            'Añadir a la Lista':      'PUSH to Stack',
+            'Añadir Mi Primer Libro': 'Init First Record()',
+            'Editar Libro':           'UPDATE Registro',
+            'Ver Detalles':           'SELECT * FROM Libro',
+            'Ver Biblioteca':         'FETCH Collection',
+            'Nuevo Libro':            'INSERT Libro',
+            'Registrarse':            'new Usuario()',
+            'Iniciar Sesión':         'Auth.login()',
+            'Cerrar Sesión':          'Session.destroy()',
+            'Entrar':                 'authenticate()',
+            'Crear Cuenta':           'createInstance()',
+            'Comenzar Ahora':         'bootstrap()',
+        };
+
+        function replaceText(node) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                var t = node.textContent;
+                for (var key in jargon) {
+                    if (t.indexOf(key) !== -1) {
+                        t = t.split(key).join(jargon[key]);
+                    }
+                }
+                node.textContent = t;
+            } else if (node.nodeType === Node.ELEMENT_NODE &&
+                       node.tagName !== 'SCRIPT' &&
+                       node.tagName !== 'STYLE' &&
+                       !node.classList.contains('version-badge')) {
+                for (var i = 0; i < node.childNodes.length; i++) {
+                    replaceText(node.childNodes[i]);
+                }
+            }
+        }
+        replaceText(document.body);
+
+
+        /* ============================================
+           FALLO 4 (6.2 Relación sistema–mundo real)
+           Iconos de acciones clave intercambiados.
+           Los iconos ya no evocan la acción real.
+           ============================================ */
+        var iconSwaps = {
+            'bi-save':            'bi-exclamation-diamond',
+            'bi-trash':           'bi-check-circle',
+            'bi-pencil-square':   'bi-wrench',
+            'bi-search':          'bi-shuffle',
+            'bi-plus-circle':     'bi-arrow-down-circle',
+            'bi-plus-lg':         'bi-arrow-down',
+            'bi-heart':           'bi-lightning-charge',
+            'bi-heart-fill':      'bi-lightning-charge-fill',
+            'bi-person-plus':     'bi-database-add',
+            'bi-box-arrow-in-right': 'bi-arrow-repeat',
+            'bi-send':            'bi-broadcast',
+        };
+
+        document.querySelectorAll('i.bi').forEach(function(icon) {
+            var classes = Array.from(icon.classList);
+            classes.forEach(function(cls) {
+                if (cls.startsWith('bi-') && iconSwaps[cls]) {
+                    icon.classList.remove(cls);
+                    icon.classList.add(iconSwaps[cls]);
+                }
+            });
+        });
+
+
+        /* ============================================
+           FALLO 12 (6.6 Modelos mentales)
+           La navbar se reordena aleatoriamente en cada carga.
+           El usuario no puede construir un modelo mental
+           de la estructura de navegación.
+           ============================================ */
+        var navList = document.querySelector('#navbarNav .navbar-nav');
+        if (navList) {
+            var items = Array.from(navList.children);
+            for (var i = items.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                navList.appendChild(items[j]);
+            }
+        }
+
+    })();
+    </script>
+    {% endif %}
 
     <!-- Badge indicador de versión -->
     {% if request.session.version and request.session.version != 'normal' %}

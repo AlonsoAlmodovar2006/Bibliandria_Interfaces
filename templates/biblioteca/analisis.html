@@ -22,67 +22,112 @@
                 </div>
             </div>
             
-            <!-- Sección de vídeos -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0"><i class="bi bi-play-circle" style="color: var(--accent);"></i> Vídeos de Estudio</h5>
-                </div>
-                <div class="card-body">
-                    <div class="alert alert-info">
-                        <i class="bi bi-info-circle-fill me-2"></i> 
-                        Los vídeos de análisis se irán añadiendo a medida que se realicen las pruebas correspondientes.
-                    </div>
-                    
-                    <!-- Contenedor de vídeos - Añadir aquí los vídeos -->
-                    <div id="videos-container">
-                        <div class="text-center py-5 text-muted">
-                            <i class="bi bi-camera-video" style="font-size: 4rem; opacity: 0.3;"></i>
-                            <p class="mt-3">No hay vídeos disponibles todavía.</p>
-                            <p class="small">Los vídeos de análisis aparecerán aquí cuando se añadan.</p>
+            <!-- Navegación por pestañas -->
+            <ul class="nav nav-tabs mb-4" id="analisisTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="responsive-tab" data-bs-toggle="tab" data-bs-target="#responsive" type="button" role="tab" aria-controls="responsive" aria-selected="true">
+                        <i class="bi bi-phone me-1"></i> Responsive
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="usabilidad-tab" data-bs-toggle="tab" data-bs-target="#usabilidad" type="button" role="tab" aria-controls="usabilidad" aria-selected="false">
+                        <i class="bi bi-hand-index-thumb me-1"></i> Usabilidad
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="accesibilidad-tab" data-bs-toggle="tab" data-bs-target="#accesibilidad" type="button" role="tab" aria-controls="accesibilidad" aria-selected="false">
+                        <i class="bi bi-universal-access me-1"></i> Accesibilidad
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Contenido de las pestañas -->
+            <div class="tab-content" id="analisisTabContent">
+
+                <!-- ===== SECCIÓN RESPONSIVE ===== -->
+                <div class="tab-pane fade show active" id="responsive" role="tabpanel" aria-labelledby="responsive-tab">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-phone" style="color: var(--accent);"></i> Análisis de Responsividad</h5>
                         </div>
-                    </div>
-                    
-                    <!-- Ejemplo de cómo añadir un vídeo (comentado):
-                    <div class="video-item mb-4">
-                        <h6 class="mb-2"><i class="bi bi-play-btn me-2"></i>Título del Vídeo</h6>
-                        <div class="ratio ratio-16x9">
-                            <iframe src="URL_DEL_VIDEO" title="Título" allowfullscreen></iframe>
-                        </div>
-                        <p class="mt-2 text-muted small">Descripción del vídeo...</p>
-                    </div>
-                    -->
-                </div>
-            </div>
-            
-            <!-- Categorías de análisis -->
-            <div class="row g-4">
-                <div class="col-sm-6 col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="bi bi-phone feature-icon"></i>
-                            <h5 class="card-title">Responsividad</h5>
-                            <p class="card-text text-muted">Análisis del comportamiento en diferentes tamaños de pantalla y dispositivos.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="bi bi-hand-index-thumb feature-icon"></i>
-                            <h5 class="card-title">Usabilidad</h5>
-                            <p class="card-text text-muted">Evaluación de la experiencia de usuario y facilidad de uso.</p>
+                        <div class="card-body">
+                            <p class="text-muted mb-4">Análisis del comportamiento de la aplicación en diferentes tamaños de pantalla y dispositivos.</p>
+                            <div class="row g-4">
+                                {% for i in "0123456789" %}
+                                <div class="col-md-6">
+                                    <div class="video-item mb-3">
+                                        <h6 class="mb-2"><i class="bi bi-play-btn me-2"></i>Responsive - Vídeo {{ forloop.counter }}</h6>
+                                        <div class="ratio ratio-16x9">
+                                            <video controls preload="metadata" title="Responsive - Vídeo {{ forloop.counter }}">
+                                                <source src="/videos/responsive/responsive_{{ forloop.counter }}.mp4" type="video/mp4">
+                                                Tu navegador no soporta la reproducción de vídeo.
+                                            </video>
+                                        </div>
+                                        <p class="mt-2 text-muted small">Vídeo {{ forloop.counter }} de análisis de responsividad.</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="bi bi-universal-access feature-icon"></i>
-                            <h5 class="card-title">Accesibilidad</h5>
-                            <p class="card-text text-muted">Verificación de estándares WCAG y uso con tecnologías asistivas.</p>
+
+                <!-- ===== SECCIÓN USABILIDAD ===== -->
+                <div class="tab-pane fade" id="usabilidad" role="tabpanel" aria-labelledby="usabilidad-tab">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-hand-index-thumb" style="color: var(--accent);"></i> Análisis de Usabilidad</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-4">Evaluación de la experiencia de usuario y facilidad de uso de la aplicación.</p>
+                            <div class="row g-4">
+                                {% for i in "0123456789" %}
+                                <div class="col-md-6">
+                                    <div class="video-item mb-3">
+                                        <h6 class="mb-2"><i class="bi bi-play-btn me-2"></i>Usabilidad - Vídeo {{ forloop.counter }}</h6>
+                                        <div class="ratio ratio-16x9">
+                                            <video controls preload="metadata" title="Usabilidad - Vídeo {{ forloop.counter }}">
+                                                <source src="/videos/usabilidad/usabilidad_{{ forloop.counter }}.mp4" type="video/mp4">
+                                                Tu navegador no soporta la reproducción de vídeo.
+                                            </video>
+                                        </div>
+                                        <p class="mt-2 text-muted small">Vídeo {{ forloop.counter }} de análisis de usabilidad.</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- ===== SECCIÓN ACCESIBILIDAD ===== -->
+                <div class="tab-pane fade" id="accesibilidad" role="tabpanel" aria-labelledby="accesibilidad-tab">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-universal-access" style="color: var(--accent);"></i> Análisis de Accesibilidad</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-4">Verificación de estándares WCAG y uso con tecnologías asistivas.</p>
+                            <div class="row g-4">
+                                {% for i in "0123456789" %}
+                                <div class="col-md-6">
+                                    <div class="video-item mb-3">
+                                        <h6 class="mb-2"><i class="bi bi-play-btn me-2"></i>Accesibilidad - Vídeo {{ forloop.counter }}</h6>
+                                        <div class="ratio ratio-16x9">
+                                            <video controls preload="metadata" title="Accesibilidad - Vídeo {{ forloop.counter }}">
+                                                <source src="/videos/accesibilidad/accesibilidad_{{ forloop.counter }}.mp4" type="video/mp4">
+                                                Tu navegador no soporta la reproducción de vídeo.
+                                            </video>
+                                        </div>
+                                        <p class="mt-2 text-muted small">Vídeo {{ forloop.counter }} de análisis de accesibilidad.</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
