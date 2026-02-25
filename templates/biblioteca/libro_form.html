@@ -38,7 +38,7 @@
                         
                         <hr class="my-4">
                         <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-accent">
+                            <button type="submit" id="btn-guardar-libro" class="btn btn-accent">
                                 <i class="bi bi-save"></i> Guardar Libro
                             </button>
                             <a href="{% if libro %}{% url 'libro_detalle' libro.pk %}{% else %}{% url 'mi_biblioteca' %}{% endif %}" class="btn btn-outline-secondary">

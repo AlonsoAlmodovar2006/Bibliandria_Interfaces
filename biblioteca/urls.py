@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.landing, name='landing'),
     path('registro/', views.registro, name='registro'),
     path('login/', views.login_view, name='login'),
+    path('demo/', views.demo_video, name='demo_video'),
     path('logout/', views.logout_view, name='logout'),
     
     # Dashboard y bibliotecas

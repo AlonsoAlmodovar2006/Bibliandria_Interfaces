@@ -18,6 +18,11 @@ def landing(request):
     return render(request, 'biblioteca/landing.html')
 
 
+def demo_video(request):
+    """Página con el vídeo demo de la aplicación"""
+    return render(request, 'biblioteca/demo_video.html')
+
+
 def registro(request):
     """Registro de nuevos usuarios"""
     if request.user.is_authenticated:

@@ -129,7 +129,7 @@
    El usuario pierde los accesos directos a tareas frecuentes
    y debe usar siempre la navegación principal.
    ========================================================= */
-[data-version="no-usable"] .quick-action-btn {
+[data-version="no-usable"] .quick-actions-section {
     display: none !important;
 }
 
@@ -169,6 +169,13 @@
     background-color: var(--danger) !important;
     border-color: var(--danger) !important;
     color: white !important;
+}
+
+/* Excepción: el botón "Guardar Libro" mantiene estilos normales */
+[data-version="no-usable"] #btn-guardar-libro {
+    background-color: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: var(--primary) !important;
 }
 
 [data-version="no-usable"] .btn-success {

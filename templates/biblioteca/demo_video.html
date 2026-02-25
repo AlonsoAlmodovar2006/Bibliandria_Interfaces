@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Demo - Bibliandria{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="text-center mb-4">
+                <i class="bi bi-play-circle display-3" style="color: var(--accent);"></i>
+                <h2 class="mt-2">Demo de Bibliandria</h2>
+                <p class="text-muted">Descubre las principales funciones de nuestra aplicación</p>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <div class="ratio ratio-16x9">
+                        <video controls preload="metadata" poster="">
+                            <source src="/videos/demo.mp4" type="video/mp4">
+                            Tu navegador no soporta la reproducción de vídeo.
+                        </video>
+                    </div>
+
+                    <div class="mt-4">
+                        <h4><i class="bi bi-info-circle" style="color: var(--accent);"></i> ¿Qué verás en este vídeo?</h4>
+                        <ul class="list-group list-group-flush mt-3">
+                            <li class="list-group-item"><i class="bi bi-check-circle text-success me-2"></i> Registro e inicio de sesión</li>
+                            <li class="list-group-item"><i class="bi bi-check-circle text-success me-2"></i> Gestión de tu biblioteca personal</li>
+                            <li class="list-group-item"><i class="bi bi-check-circle text-success me-2"></i> Añadir, editar y eliminar libros</li>
+                            <li class="list-group-item"><i class="bi bi-check-circle text-success me-2"></i> Préstamos y lista de deseos</li>
+                            <li class="list-group-item"><i class="bi bi-check-circle text-success me-2"></i> Reseñas y valoraciones</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'login' %}" class="btn btn-accent">
+                    <i class="bi bi-box-arrow-in-right"></i> Ir a Iniciar Sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
