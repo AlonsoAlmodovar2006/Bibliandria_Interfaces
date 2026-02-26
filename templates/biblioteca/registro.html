@@ -2,90 +2,386 @@
 
 {% block title %}Registro - Bibliandria{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* Pasos del registro */
+    .registro-steps {
+        display: flex;
+        justify-content: center;
+        gap: 0;
+        margin-bottom: 2rem;
+    }
+    .registro-step {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        position: relative;
+    }
+    .registro-step .step-number {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #e2e8f0;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+    }
+    .registro-step.active .step-number {
+        background: var(--accent);
+        color: white;
+    }
+    .registro-step.completed .step-number {
+        background: var(--success);
+        color: white;
+    }
+    .registro-step-connector {
+        width: 40px;
+        height: 2px;
+        background: #e2e8f0;
+        align-self: center;
+        transition: background 0.3s ease;
+    }
+    .registro-step-connector.completed {
+        background: var(--success);
+    }
+
+    /* Indicador de campo requerido */
+    .required-indicator {
+        color: var(--danger);
+        font-weight: 700;
+        margin-left: 2px;
+    }
+
+    /* Helper text */
+    .field-help {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 0.3rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    .field-help i {
+        font-size: 0.75rem;
+    }
+
+    /* Password toggle */
+    .password-wrapper {
+        position: relative;
+    }
+    .password-toggle {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        font-size: 1.1rem;
+        z-index: 2;
+        transition: color 0.2s;
+    }
+    .password-toggle:hover {
+        color: var(--primary);
+    }
+
+    /* Indicador de fuerza de contraseña */
+    .password-strength {
+        margin-top: 0.5rem;
+    }
+    .strength-bar {
+        height: 4px;
+        border-radius: 4px;
+        background: #e2e8f0;
+        overflow: hidden;
+        margin-bottom: 0.3rem;
+    }
+    .strength-fill {
+        height: 100%;
+        border-radius: 4px;
+        width: 0%;
+        transition: width 0.4s ease, background 0.4s ease;
+    }
+    .strength-text {
+        font-size: 0.78rem;
+        font-weight: 500;
+    }
+
+    /* Requisitos de contraseña */
+    .password-requirements {
+        list-style: none;
+        padding: 0;
+        margin: 0.5rem 0 0;
+        font-size: 0.8rem;
+    }
+    .password-requirements li {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.15rem 0;
+        color: var(--text-muted);
+        transition: color 0.2s;
+    }
+    .password-requirements li i {
+        font-size: 0.75rem;
+        transition: color 0.2s;
+    }
+    .password-requirements li.met {
+        color: var(--success);
+    }
+    .password-requirements li.met i {
+        color: var(--success);
+    }
+
+    /* Match indicator */
+    .password-match {
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+        display: none;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    .password-match.show {
+        display: flex;
+    }
+    .password-match.match {
+        color: var(--success);
+    }
+    .password-match.no-match {
+        color: var(--danger);
+    }
+
+    /* Error styling mejorado */
+    .field-errors {
+        margin-top: 0.4rem;
+    }
+    .field-errors ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .field-errors li, .field-errors .errorlist li {
+        font-size: 0.82rem;
+        color: var(--danger);
+        display: flex;
+        align-items: flex-start;
+        gap: 0.3rem;
+        padding: 0.2rem 0;
+    }
+    .field-errors li::before, .field-errors .errorlist li::before {
+        content: "\F33A";
+        font-family: "bootstrap-icons";
+        font-size: 0.75rem;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    /* Campos validados */
+    .form-control.is-valid-custom {
+        border-color: var(--success) !important;
+    }
+    .form-control.is-invalid-custom {
+        border-color: var(--danger) !important;
+    }
+
+    /* Non-field errors */
+    .form-global-errors {
+        background: #fef2f2;
+        border-left: 4px solid var(--danger);
+        border-radius: var(--border-radius-sm);
+        padding: 0.8rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .form-global-errors ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .form-global-errors li {
+        color: var(--danger);
+        font-size: 0.85rem;
+        padding: 0.15rem 0;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-7 col-lg-5">
+        <div class="col-md-8 col-lg-6">
             <div class="text-center mb-4">
                 <i class="bi bi-book-half display-3" style="color: var(--accent);"></i>
                 <h2 class="mt-2">Únete a Bibliandria</h2>
                 <p class="text-muted">Crea tu cuenta y empieza a gestionar tu biblioteca</p>
             </div>
-            
+
+            <!-- Pasos visuales -->
+            <div class="registro-steps" aria-label="Progreso del registro">
+                <div class="registro-step active" id="step-1">
+                    <span class="step-number">1</span>
+                    <span class="d-none d-sm-inline">Datos personales</span>
+                </div>
+                <div class="registro-step-connector" id="connector-1"></div>
+                <div class="registro-step" id="step-2">
+                    <span class="step-number">2</span>
+                    <span class="d-none d-sm-inline">Cuenta</span>
+                </div>
+                <div class="registro-step-connector" id="connector-2"></div>
+                <div class="registro-step" id="step-3">
+                    <span class="step-number">3</span>
+                    <span class="d-none d-sm-inline">Seguridad</span>
+                </div>
+            </div>
+
             <div class="card auth-card">
                 <div class="card-body">
-                    <form method="post">
+                    {% if form.non_field_errors %}
+                        <div class="form-global-errors" role="alert">
+                            <strong><i class="bi bi-exclamation-triangle me-1"></i> Por favor, corrige los siguientes errores:</strong>
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <form method="post" id="registroForm" novalidate>
                         {% csrf_token %}
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ form.first_name.id_for_label }}" class="form-label">
-                                    <i class="bi bi-person me-1"></i> Nombre
+
+                        <!-- SECCIÓN 1: Datos personales -->
+                        <fieldset class="mb-4">
+                            <legend class="h6 mb-3" style="color: var(--primary); border-bottom: 2px solid var(--cream-dark); padding-bottom: 0.5rem;">
+                                <i class="bi bi-person-vcard me-1" style="color: var(--accent);"></i> Datos personales
+                            </legend>
+
+                            <div class="row">
+                                <div class="col-sm-6 mb-3">
+                                    <label for="{{ form.first_name.id_for_label }}" class="form-label">
+                                        <i class="bi bi-person me-1"></i> Nombre <span class="required-indicator" aria-hidden="true">*</span>
+                                    </label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                        <div class="field-errors" role="alert">{{ form.first_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label for="{{ form.last_name.id_for_label }}" class="form-label">
+                                        <i class="bi bi-people me-1"></i> Apellidos <span class="required-indicator" aria-hidden="true">*</span>
+                                    </label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}
+                                        <div class="field-errors" role="alert">{{ form.last_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- SECCIÓN 2: Datos de cuenta -->
+                        <fieldset class="mb-4">
+                            <legend class="h6 mb-3" style="color: var(--primary); border-bottom: 2px solid var(--cream-dark); padding-bottom: 0.5rem;">
+                                <i class="bi bi-at me-1" style="color: var(--accent);"></i> Datos de cuenta
+                            </legend>
+
+                            <div class="mb-3">
+                                <label for="{{ form.username.id_for_label }}" class="form-label">
+                                    <i class="bi bi-at me-1"></i> Nombre de usuario <span class="required-indicator" aria-hidden="true">*</span>
                                 </label>
-                                {{ form.first_name }}
-                                {% if form.first_name.errors %}
-                                    <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
+                                {{ form.username }}
+                                <div class="field-help">
+                                    <i class="bi bi-info-circle"></i> Letras, dígitos y @/./+/-/_ solamente.
+                                </div>
+                                {% if form.username.errors %}
+                                    <div class="field-errors" role="alert">{{ form.username.errors }}</div>
                                 {% endif %}
                             </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ form.last_name.id_for_label }}" class="form-label">
-                                    Apellidos
+
+                            <div class="mb-3">
+                                <label for="{{ form.email.id_for_label }}" class="form-label">
+                                    <i class="bi bi-envelope me-1"></i> Correo electrónico <span class="required-indicator" aria-hidden="true">*</span>
                                 </label>
-                                {{ form.last_name }}
-                                {% if form.last_name.errors %}
-                                    <div class="text-danger small mt-1">{{ form.last_name.errors }}</div>
+                                {{ form.email }}
+                                <div class="field-help">
+                                    <i class="bi bi-info-circle"></i> Usaremos este correo para notificaciones importantes.
+                                </div>
+                                {% if form.email.errors %}
+                                    <div class="field-errors" role="alert">{{ form.email.errors }}</div>
                                 {% endif %}
                             </div>
+                        </fieldset>
+
+                        <!-- SECCIÓN 3: Seguridad -->
+                        <fieldset class="mb-4">
+                            <legend class="h6 mb-3" style="color: var(--primary); border-bottom: 2px solid var(--cream-dark); padding-bottom: 0.5rem;">
+                                <i class="bi bi-shield-lock me-1" style="color: var(--accent);"></i> Seguridad
+                            </legend>
+
+                            <div class="mb-3">
+                                <label for="{{ form.password1.id_for_label }}" class="form-label">
+                                    <i class="bi bi-lock me-1"></i> Contraseña <span class="required-indicator" aria-hidden="true">*</span>
+                                </label>
+                                <div class="password-wrapper">
+                                    {{ form.password1 }}
+                                    <button type="button" class="password-toggle" onclick="togglePassword('{{ form.password1.id_for_label }}')" aria-label="Mostrar contraseña" title="Mostrar/ocultar contraseña">
+                                        <i class="bi bi-eye" id="toggle-icon-{{ form.password1.id_for_label }}"></i>
+                                    </button>
+                                </div>
+                                <!-- Barra de fuerza -->
+                                <div class="password-strength" id="password-strength">
+                                    <div class="strength-bar">
+                                        <div class="strength-fill" id="strength-fill"></div>
+                                    </div>
+                                    <span class="strength-text" id="strength-text"></span>
+                                </div>
+                                <!-- Requisitos -->
+                                <ul class="password-requirements" id="password-requirements">
+                                    <li id="req-length"><i class="bi bi-circle"></i> Al menos 8 caracteres</li>
+                                    <li id="req-not-common"><i class="bi bi-circle"></i> No puede ser una contraseña común</li>
+                                    <li id="req-not-numeric"><i class="bi bi-circle"></i> No puede ser solo números</li>
+                                    <li id="req-not-similar"><i class="bi bi-circle"></i> No puede ser similar a tus datos personales</li>
+                                </ul>
+                                {% if form.password1.errors %}
+                                    <div class="field-errors" role="alert">{{ form.password1.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.password2.id_for_label }}" class="form-label">
+                                    <i class="bi bi-lock-fill me-1"></i> Confirmar contraseña <span class="required-indicator" aria-hidden="true">*</span>
+                                </label>
+                                <div class="password-wrapper">
+                                    {{ form.password2 }}
+                                    <button type="button" class="password-toggle" onclick="togglePassword('{{ form.password2.id_for_label }}')" aria-label="Mostrar contraseña" title="Mostrar/ocultar contraseña">
+                                        <i class="bi bi-eye" id="toggle-icon-{{ form.password2.id_for_label }}"></i>
+                                    </button>
+                                </div>
+                                <div class="password-match" id="password-match">
+                                    <i class="bi bi-check-circle"></i>
+                                    <span id="password-match-text"></span>
+                                </div>
+                                {% if form.password2.errors %}
+                                    <div class="field-errors" role="alert">{{ form.password2.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </fieldset>
+
+                        <div class="d-flex align-items-center mb-3">
+                            <small class="text-muted"><span class="required-indicator">*</span> Campos obligatorios</small>
                         </div>
-                        
-                        <div class="mb-3">
-                            <label for="{{ form.username.id_for_label }}" class="form-label">
-                                <i class="bi bi-at me-1"></i> Usuario
-                            </label>
-                            {{ form.username }}
-                            {% if form.username.errors %}
-                                <div class="text-danger small mt-1">{{ form.username.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="{{ form.email.id_for_label }}" class="form-label">
-                                <i class="bi bi-envelope me-1"></i> Email
-                            </label>
-                            {{ form.email }}
-                            {% if form.email.errors %}
-                                <div class="text-danger small mt-1">{{ form.email.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="{{ form.password1.id_for_label }}" class="form-label">
-                                <i class="bi bi-lock me-1"></i> Contraseña
-                            </label>
-                            {{ form.password1 }}
-                            {% if form.password1.errors %}
-                                <div class="text-danger small mt-1">{{ form.password1.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label for="{{ form.password2.id_for_label }}" class="form-label">
-                                <i class="bi bi-lock-fill me-1"></i> Confirmar Contraseña
-                            </label>
-                            {{ form.password2 }}
-                            {% if form.password2.errors %}
-                                <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <button type="submit" class="btn btn-accent w-100 mb-3 py-2">
-                            <i class="bi bi-person-plus"></i> Crear Cuenta
+
+                        <button type="submit" class="btn btn-accent w-100 mb-3 py-2" id="submitBtn">
+                            <i class="bi bi-person-plus me-1"></i> Crear Cuenta
                         </button>
                     </form>
-                    
+
                     <div class="text-center mt-3">
-                        <p class="mb-0 text-muted">¿Ya tienes cuenta? 
+                        <p class="mb-0 text-muted">¿Ya tienes cuenta?
                             <a href="{% url 'login' %}" style="color: var(--accent-dark); font-weight: 600;">Inicia sesión aquí</a>
                         </p>
                     </div>
@@ -94,4 +390,193 @@
         </div>
     </div>
 </div>
+
+<script>
+    // ========== Toggle visibilidad contraseña ==========
+    function togglePassword(fieldId) {
+        const field = document.getElementById(fieldId);
+        const icon = document.getElementById('toggle-icon-' + fieldId);
+        if (field.type === 'password') {
+            field.type = 'text';
+            icon.classList.replace('bi-eye', 'bi-eye-slash');
+        } else {
+            field.type = 'password';
+            icon.classList.replace('bi-eye-slash', 'bi-eye');
+        }
+    }
+
+    // ========== Indicador de fuerza de contraseña ==========
+    function checkPasswordStrength(password) {
+        let score = 0;
+        if (password.length >= 8) score++;
+        if (password.length >= 12) score++;
+        if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
+        if (/\d/.test(password)) score++;
+        if (/[^a-zA-Z0-9]/.test(password)) score++;
+        return score;
+    }
+
+    function updatePasswordStrength() {
+        const password = document.getElementById('{{ form.password1.id_for_label }}').value;
+        const fill = document.getElementById('strength-fill');
+        const text = document.getElementById('strength-text');
+        const reqLength = document.getElementById('req-length');
+        const reqNumeric = document.getElementById('req-not-numeric');
+
+        if (!password) {
+            fill.style.width = '0%';
+            text.textContent = '';
+            reqLength.classList.remove('met');
+            reqLength.querySelector('i').className = 'bi bi-circle';
+            reqNumeric.classList.remove('met');
+            reqNumeric.querySelector('i').className = 'bi bi-circle';
+            return;
+        }
+
+        // Actualizar requisitos
+        if (password.length >= 8) {
+            reqLength.classList.add('met');
+            reqLength.querySelector('i').className = 'bi bi-check-circle-fill';
+        } else {
+            reqLength.classList.remove('met');
+            reqLength.querySelector('i').className = 'bi bi-circle';
+        }
+
+        if (!/^\d+$/.test(password)) {
+            reqNumeric.classList.add('met');
+            reqNumeric.querySelector('i').className = 'bi bi-check-circle-fill';
+        } else {
+            reqNumeric.classList.remove('met');
+            reqNumeric.querySelector('i').className = 'bi bi-circle';
+        }
+
+        const score = checkPasswordStrength(password);
+        const levels = [
+            { width: '20%', color: '#dc3545', label: 'Muy débil' },
+            { width: '40%', color: '#fd7e14', label: 'Débil' },
+            { width: '60%', color: '#ffc107', label: 'Aceptable' },
+            { width: '80%', color: '#28a745', label: 'Fuerte' },
+            { width: '100%', color: '#1f7a4c', label: 'Muy fuerte' },
+        ];
+        const level = levels[Math.min(score, levels.length) - 1] || levels[0];
+        fill.style.width = level.width;
+        fill.style.background = level.color;
+        text.textContent = level.label;
+        text.style.color = level.color;
+
+        // Actualizar match si hay algo en confirm
+        updatePasswordMatch();
+    }
+
+    // ========== Coincidencia de contraseñas ==========
+    function updatePasswordMatch() {
+        const p1 = document.getElementById('{{ form.password1.id_for_label }}').value;
+        const p2 = document.getElementById('{{ form.password2.id_for_label }}').value;
+        const matchDiv = document.getElementById('password-match');
+        const matchText = document.getElementById('password-match-text');
+        const matchIcon = matchDiv.querySelector('i');
+
+        if (!p2) {
+            matchDiv.classList.remove('show');
+            return;
+        }
+
+        matchDiv.classList.add('show');
+        if (p1 === p2) {
+            matchDiv.classList.add('match');
+            matchDiv.classList.remove('no-match');
+            matchText.textContent = 'Las contraseñas coinciden';
+            matchIcon.className = 'bi bi-check-circle-fill';
+        } else {
+            matchDiv.classList.remove('match');
+            matchDiv.classList.add('no-match');
+            matchText.textContent = 'Las contraseñas no coinciden';
+            matchIcon.className = 'bi bi-x-circle-fill';
+        }
+    }
+
+    // ========== Progreso de pasos ==========
+    function updateSteps() {
+        const firstName = document.getElementById('{{ form.first_name.id_for_label }}').value.trim();
+        const lastName = document.getElementById('{{ form.last_name.id_for_label }}').value.trim();
+        const username = document.getElementById('{{ form.username.id_for_label }}').value.trim();
+        const email = document.getElementById('{{ form.email.id_for_label }}').value.trim();
+        const pass1 = document.getElementById('{{ form.password1.id_for_label }}').value;
+        const pass2 = document.getElementById('{{ form.password2.id_for_label }}').value;
+
+        const step1Done = firstName && lastName;
+        const step2Done = username && email;
+        const step3Done = pass1.length >= 8 && pass1 === pass2;
+
+        const step1El = document.getElementById('step-1');
+        const step2El = document.getElementById('step-2');
+        const step3El = document.getElementById('step-3');
+        const conn1 = document.getElementById('connector-1');
+        const conn2 = document.getElementById('connector-2');
+
+        // Step 1
+        if (step1Done) {
+            step1El.classList.add('completed');
+            step1El.querySelector('.step-number').innerHTML = '<i class="bi bi-check"></i>';
+            conn1.classList.add('completed');
+        } else {
+            step1El.classList.remove('completed');
+            step1El.classList.add('active');
+            step1El.querySelector('.step-number').textContent = '1';
+            conn1.classList.remove('completed');
+        }
+
+        // Step 2
+        if (step2Done) {
+            step2El.classList.add('completed', 'active');
+            step2El.querySelector('.step-number').innerHTML = '<i class="bi bi-check"></i>';
+            conn2.classList.add('completed');
+        } else if (step1Done) {
+            step2El.classList.add('active');
+            step2El.classList.remove('completed');
+            step2El.querySelector('.step-number').textContent = '2';
+            conn2.classList.remove('completed');
+        } else {
+            step2El.classList.remove('active', 'completed');
+            step2El.querySelector('.step-number').textContent = '2';
+            conn2.classList.remove('completed');
+        }
+
+        // Step 3
+        if (step3Done) {
+            step3El.classList.add('completed', 'active');
+            step3El.querySelector('.step-number').innerHTML = '<i class="bi bi-check"></i>';
+        } else if (step1Done && step2Done) {
+            step3El.classList.add('active');
+            step3El.classList.remove('completed');
+            step3El.querySelector('.step-number').textContent = '3';
+        } else {
+            step3El.classList.remove('active', 'completed');
+            step3El.querySelector('.step-number').textContent = '3';
+        }
+    }
+
+    // ========== Listeners ==========
+    document.addEventListener('DOMContentLoaded', function() {
+        const pass1 = document.getElementById('{{ form.password1.id_for_label }}');
+        const pass2 = document.getElementById('{{ form.password2.id_for_label }}');
+
+        if (pass1) {
+            pass1.addEventListener('input', updatePasswordStrength);
+        }
+        if (pass2) {
+            pass2.addEventListener('input', updatePasswordMatch);
+        }
+
+        // Actualizar pasos en todos los campos
+        const fields = document.querySelectorAll('#registroForm .form-control');
+        fields.forEach(function(field) {
+            field.addEventListener('input', updateSteps);
+            field.addEventListener('change', updateSteps);
+        });
+
+        // Estado inicial
+        updateSteps();
+    });
+</script>
 {% endblock %}

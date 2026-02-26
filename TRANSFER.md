@@ -9,14 +9,14 @@
 cd "C:\2ºDAW\Diseño de Interfaces\4-Usabilidad\Bibliandria\Repositorio"
 
 # Transfiere el script al servidor
-scp deploy.sh diego@192.168.5.45:~/
-scp update.sh diego@192.168.5.45:~/
+scp deploy.sh diego@192.168.5.55:~/
+scp update.sh diego@192.168.5.55:~/
 ```
 
 ### 2. Conecta al servidor:
 
 ```powershell
-ssh diego@192.168.5.45
+ssh diego@192.168.5.55
 ```
 
 ### 3. En el servidor Ubuntu, ejecuta:
@@ -33,7 +33,7 @@ chmod +x deploy.sh update.sh
 ### 1. Conecta al servidor:
 
 ```powershell
-ssh diego@192.168.5.45
+ssh diego@192.168.5.55
 ```
 
 ### 2. El script automáticamente clonará el repositorio
@@ -53,7 +53,7 @@ chmod +x deploy.sh
 
 ```powershell
 # Conecta y copia el contenido
-ssh diego@192.168.5.45
+ssh diego@192.168.5.55
 
 # Una vez conectado, crea el archivo:
 nano deploy.sh
@@ -85,8 +85,8 @@ Datos sugeridos:
 ### Acceder a la aplicación:
 
 Abre tu navegador en:
-- **http://192.168.5.45**
-- **http://192.168.5.45/admin** (panel de administración)
+- **http://192.168.5.55**
+- **http://192.168.5.55/admin** (panel de administración)
 
 ---
 

@@ -17,7 +17,7 @@ NC='\033[0m' # No Color
 APP_NAME="bibliandria"
 APP_DIR="/home/diego/apps/$APP_NAME"
 REPO_URL="https://github.com/AlonsoAlmodovar2006/Bibliandria_Interfaces.git"
-DOMAIN_OR_IP="192.168.5.45"
+DOMAIN_OR_IP="192.168.5.55"
 USER="alonso"
 VENV_PATH="$APP_DIR/venv"
 

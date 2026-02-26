@@ -2,7 +2,7 @@
 
 ## 📋 Información del Servidor
 
-- **IP**: 192.168.5.45
+- **IP**: 192.168.5.55
 - **Hostname**: alonsoServer
 - **Usuario**: diego
 - **SO**: Ubuntu Server 25.10
@@ -12,7 +12,7 @@
 ### 1. Conectar al servidor
 
 ```bash
-ssh diego@192.168.5.45
+ssh diego@192.168.5.55
 ```
 
 ### 2. Descargar el script de despliegue
@@ -20,7 +20,7 @@ ssh diego@192.168.5.45
 ```bash
 # Opción A: Si ya tienes el repositorio clonado localmente
 # Copia el archivo deploy.sh al servidor usando scp desde tu máquina Windows:
-# scp deploy.sh diego@192.168.5.45:~/
+# scp deploy.sh diego@192.168.5.55:~/
 
 # Opción B: Descargar directamente del repositorio
 curl -O https://raw.githubusercontent.com/AlonsoAlmodovar2006/Bibliandria_Interfaces/main/deploy.sh
@@ -61,7 +61,7 @@ python manage.py createsuperuser --settings=bibliandria.settings_prod
 ### 6. Acceder a la aplicación
 
 Abre tu navegador en:
-- http://192.168.5.45
+- http://192.168.5.55
 - http://alonsoServer (si está configurado en tu DNS/hosts)
 
 ## 🔄 Actualizar la Aplicación
@@ -144,7 +144,7 @@ En Windows, edita el archivo: `C:\Windows\System32\drivers\etc\hosts`
 
 Añade:
 ```
-192.168.5.45    alonsoServer
+192.168.5.55    alonsoServer
 ```
 
 ### Acceso desde otras máquinas en la red

@@ -1338,12 +1338,7 @@ img.book-cover {
     }
 
     /* Version selector on login */
-    .version-selector {
-        gap: 0.5rem;
-    }
-
     .version-option {
-        min-width: 100px;
         padding: 0.8rem 0.6rem;
     }
 
@@ -1610,14 +1605,8 @@ img.book-cover {
     }
 
     /* Version selector on login */
-    .version-selector {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
     .version-option {
         flex-direction: row;
-        min-width: unset;
         padding: 0.8rem 1rem;
         gap: 0.8rem;
     }
