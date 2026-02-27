@@ -188,6 +188,12 @@ server {
         add_header Cache-Control "public";
     }
 
+    location /videos/ {
+        alias $APP_DIR/videos/;
+        expires 30d;
+        add_header Cache-Control "public";
+    }
+
     location / {
         include proxy_params;
         proxy_pass http://unix:/run/$APP_NAME.sock;
