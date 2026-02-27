@@ -18,7 +18,7 @@ SECRET_KEY = 'django-insecure-bibliandria-dev-key-2024-change-in-production'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]  # Permitir todas las direcciones IP (solo para desarrollo)
 
 
 # Application definition
