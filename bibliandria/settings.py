@@ -20,6 +20,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]  # Permitir todas las direcciones IP (solo para desarrollo)
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://192.168.5.55',
+    'http://localhost',
+    'http://127.0.0.1',
+]
+
 
 # Application definition
 
