@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {% if es_propietario %}Mi Biblioteca{% else %}Biblioteca de {{ usuario_biblioteca.get_full_name }}{% endif %} - Bibliandria
+{% if es_propietario %}Mi Biblioteca{% else %}Biblioteca de {{ usuario_biblioteca.get_full_name }}{% endif %} -
+Bibliandria
 {% endblock %}
 
 {% block content %}
@@ -11,19 +12,19 @@
         <div class="d-flex justify-content-between align-items-start flex-wrap">
             <div>
                 <h1 class="display-5">
-                    <i class="bi bi-bookshelf"></i> 
+                    <i class="bi bi-bookshelf"></i>
                     {% if es_propietario %}
-                        Mi Biblioteca
+                    Mi Biblioteca
                     {% else %}
-                        Biblioteca de {{ usuario_biblioteca.get_full_name }}
+                    Biblioteca de {{ usuario_biblioteca.get_full_name }}
                     {% endif %}
                 </h1>
                 <p class="lead">
                     <i class="bi bi-at"></i>{{ usuario_biblioteca.username }}
                     {% if not es_propietario %}
-                        <span class="badge badge-accent ms-2">
-                            <i class="bi bi-globe"></i> Biblioteca Pública
-                        </span>
+                    <span class="badge badge-accent ms-2">
+                        <i class="bi bi-globe"></i> Biblioteca Pública
+                    </span>
                     {% endif %}
                 </p>
             </div>
@@ -34,12 +35,13 @@
             {% endif %}
         </div>
     </div>
-    
+
     <!-- Búsqueda -->
     <div class="row mb-4">
         <div class="col-md-6">
             <form method="get" class="search-bar d-flex">
                 <div class="position-relative flex-grow-1">
+                    <label for="id_query" class="form-label">Buscar por título, ISBN o autor</label>
                     <i class="bi bi-search search-icon"></i>
                     {{ form.query }}
                 </div>
@@ -58,7 +60,7 @@
             {% endif %}
         </div>
     </div>
-    
+
     <!-- Lista de libros -->
     {% if libros %}
     <div class="row g-4">
@@ -69,7 +71,7 @@
                 <img src="{{ libro.portada.url }}" class="card-img-top book-cover" alt="{{ libro.titulo }}">
                 {% else %}
                 <div class="book-cover d-flex align-items-center justify-content-center text-white"
-                     style="background: linear-gradient(135deg, var(--primary-light), var(--primary));">
+                    style="background: linear-gradient(135deg, var(--primary-light), var(--primary));">
                     <i class="bi bi-book display-3" style="color: var(--accent); opacity: 0.7;"></i>
                 </div>
                 {% endif %}
@@ -88,8 +90,10 @@
                     {% endif %}
                     <div class="mt-auto">
                         <div class="d-flex gap-1 mb-2 flex-wrap">
-                            <span class="badge badge-accent" style="font-size: 0.7rem;">{{ libro.get_formato_display }}</span>
-                            <span class="badge bg-secondary" style="font-size: 0.7rem;">{{ libro.get_estado_display }}</span>
+                            <span class="badge badge-accent" style="font-size: 0.7rem;">{{ libro.get_formato_display
+                                }}</span>
+                            <span class="badge bg-secondary" style="font-size: 0.7rem;">{{ libro.get_estado_display
+                                }}</span>
                         </div>
                         <a href="{% url 'libro_detalle' libro.pk %}" class="btn btn-sm btn-outline-primary w-100">
                             <i class="bi bi-eye"></i> Ver Detalles

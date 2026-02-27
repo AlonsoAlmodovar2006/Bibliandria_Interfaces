@@ -68,15 +68,15 @@ class LibroForm(forms.ModelForm):
             'descripcion', 'portada', 'numero_paginas', 'estado', 'formato'
         ]
         widgets = {
-            'titulo': forms.TextInput(attrs={'class': 'form-control'}),
-            'autor': forms.TextInput(attrs={'class': 'form-control'}),
+            'titulo': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
+            'autor': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
             'isbn': forms.TextInput(attrs={'class': 'form-control'}),
             'editorial': forms.TextInput(attrs={'class': 'form-control'}),
             'año_publicacion': forms.NumberInput(attrs={'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'numero_paginas': forms.NumberInput(attrs={'class': 'form-control'}),
-            'estado': forms.Select(attrs={'class': 'form-control'}),
-            'formato': forms.Select(attrs={'class': 'form-control'}),
+            'estado': forms.Select(attrs={'class': 'form-control', 'required': True}),
+            'formato': forms.Select(attrs={'class': 'form-control', 'required': True}),
         }
 
 
