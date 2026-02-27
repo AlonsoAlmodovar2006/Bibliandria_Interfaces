@@ -185,9 +185,6 @@ Para desplegar la aplicación en un servidor Ubuntu sin contenedores:
 - 🚀 **Script automático**: Usar [deploy.sh](deploy.sh)
 - 📦 **Transferencia**: Ver [TRANSFER.md](TRANSFER.md)
 
-- Usuario: admin
-- Password: admin1234
-
 ```bash
 # Ejemplo rápido
 scp deploy.sh usuario@servidor:~/
