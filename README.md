@@ -18,7 +18,6 @@
 - [Instalación](#-instalación)
 - [Uso](#-uso)
 - [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Capturas de Pantalla](#-capturas-de-pantalla)
 - [Información Académica](#-información-académica)
 - [Autor](#-autor)
 
@@ -186,6 +185,9 @@ Para desplegar la aplicación en un servidor Ubuntu sin contenedores:
 - 🚀 **Script automático**: Usar [deploy.sh](deploy.sh)
 - 📦 **Transferencia**: Ver [TRANSFER.md](TRANSFER.md)
 
+- Usuario: admin
+- Password: admin1234
+
 ```bash
 # Ejemplo rápido
 scp deploy.sh usuario@servidor:~/
@@ -259,25 +261,6 @@ Repositorio/
 
 ---
 
-## 🖼️ Capturas de Pantalla
-
-### Landing Page
-Página principal con información del producto y funcionalidades destacadas.
-
-### Mi Biblioteca
-Vista de todos los libros del usuario con opciones de búsqueda y filtrado.
-
-### Detalle de Libro
-Información completa del libro, reseña personal y gestión de préstamos.
-
-### Bibliotecas Públicas
-Exploración de bibliotecas de otros usuarios.
-
-### Panel de Administración
-Gestión completa de usuarios y permisos.
-
----
-
 ## 🎓 Información Académica
 
 **Asignatura**: Diseño de Interfaces  
@@ -299,6 +282,7 @@ Gestión completa de usuarios y permisos.
 
 ## 👨‍💻 Autor
 
+Alonso Almodóvar Delgado
 Proyecto desarrollado para la asignatura de Diseño de Interfaces.
 
 ---
